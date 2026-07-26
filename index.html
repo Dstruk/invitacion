@@ -5,35 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invitación de Dstruk</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>¡Estás Invitado!</h1>
-            <p class="names">Dstruk</p>
-        </header>
 
-        <section class="details">
-            <div class="date">
-                <h2>Fecha</h2>
-                <p>Próximamente</p>
-                <p>--:-- Horas</p>
+    <!-- Pantalla de Carga / Sobre -->
+    <div id="envelope-wrapper" onclick="openInvitation()">
+        <div class="envelope">
+            <div class="flap"></div>
+            <div class="body"></div>
+            <div class="text-open">
+                <p>Has recibido una invitación</p>
+                <div class="heart">❤️</div>
+                <span>TOCA PARA ABRIR</span>
             </div>
-
-            <div class="location">
-                <h2>Lugar</h2>
-                <p>Por definir</p>
-                <p>Ciudad, País</p>
-                <a href="https://maps.google.com" target="_blank" class="btn-link">Ver ubicación</a>
-            </div>
-        </section>
-
-        <section class="rsvp">
-            <h2>Confirmar Asistencia</h2>
-            <p>Por favor, confírmanos tu asistencia pronto.</p>
-            <a href="https://wa.me/PON_TU_TELEFONO_AQUI?text=Hola!%20Confirmo%20mi%20asistencia%20a%20la%20invitacion%20de%20Dstruk" class="btn-rsvp">Confirmar por WhatsApp</a>
-        </section>
+        </div>
     </div>
+
+    <!-- Contenido de la Invitación (Oculto al inicio) -->
+    <div id="main-content" class="hidden">
+        <div class="container">
+            <header>
+                <h1>¡Estás Invitado!</h1>
+                <p class="names">Dstruk</p>
+            </header>
+
+            <section class="details">
+                <div class="date">
+                    <h2>Fecha</h2>
+                    <p>Próximamente</p>
+                    <p>--:-- Horas</p>
+                </div>
+
+                <div class="location">
+                    <h2>Lugar</h2>
+                    <p>Por definir</p>
+                    <p>Ciudad, País</p>
+                    <a href="https://maps.google.com" target="_blank" class="btn-link">Ver ubicación</a>
+                </div>
+            </section>
+
+            <section class="rsvp">
+                <h2>Confirmar Asistencia</h2>
+                <p>Por favor, confírmanos tu asistencia pronto.</p>
+                <a href="https://wa.me/PON_TU_TELEFONO_AQUI?text=Hola!%20Confirmo%20mi%20asistencia%20a%20la%20invitacion%20de%20Dstruk" class="btn-rsvp">Confirmar por WhatsApp</a>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        function openInvitation() {
+            const wrapper = document.getElementById('envelope-wrapper');
+            const content = document.getElementById('main-content');
+            
+            // Inicia la animación de apertura
+            wrapper.classList.add('open');
+            
+            // Después de la animación, muestra el contenido y quita el sobre
+            setTimeout(() => {
+                wrapper.style.display = 'none';
+                content.classList.remove('hidden');
+                content.classList.add('fade-in');
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
