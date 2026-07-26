@@ -9,7 +9,7 @@
         :root {
             --primary: #ff85a1;
             --accent: #ffd700;
-            --holy-light: radial-gradient(circle, #ffffff 0%, #fff5f7 70%, #fff0f3 100%);
+            --holy-light: linear-gradient(135deg, #ffffff 0%, #fff0f3 100%);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
@@ -19,82 +19,92 @@
         #stage { position: fixed; inset: 0; z-index: 1; background: #000; }
         .photo-frame { position: absolute; width: 100%; height: 100%; opacity: 0; display: none; transition: opacity 1s ease; overflow: hidden; }
         .photo-frame.active { display: block; opacity: 1; }
-        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6) contrast(1.1); }
 
-        /* --- EDICIONES TIPO TIKTOK --- */
-        .edit-kenburns img { animation: kenburns 10s linear infinite alternate; }
-        @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.4) translate(10px, 5px); } }
-        .edit-glitch.active img { animation: glitch-anim 0.2s infinite; }
-        @keyframes glitch-anim { 0% { transform: translate(0); filter: hue-rotate(0deg); } 50% { transform: translate(5px, -5px); filter: hue-rotate(90deg); } 100% { transform: translate(0); } }
-        .edit-3d { perspective: 1200px; }
-        .edit-3d img { animation: tilt-3d 6s ease-in-out infinite alternate; }
-        @keyframes tilt-3d { from { transform: rotateY(-20deg); } to { transform: rotateY(20deg); } }
-        .edit-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; }
-        .edit-grid .clone { width: 100%; height: 100%; overflow: hidden; position: relative; }
-        .edit-grid .clone img { position: absolute; width: 200%; height: 200%; object-fit: cover; }
-        .edit-grid .c1 img { top: 0; left: 0; } .edit-grid .c2 img { top: 0; right: 0; } .edit-grid .c3 img { bottom: 0; left: 0; } .edit-grid .c4 img { bottom: 0; right: 0; }
-        .edit-hearts::after { content: '❤'; color: var(--primary); font-size: 2rem; position: absolute; animation: fly-hearts 3s infinite linear; }
-        @keyframes fly-hearts { 0% { bottom: -10%; opacity: 0; } 100% { bottom: 110%; opacity: 0; } }
+        /* --- EFECTOS CELESTIALES --- */
+        .light-rays {
+            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(from 180deg at 50% 50%, transparent 0deg, rgba(255,215,0,0.03) 10deg, transparent 20deg, rgba(255,215,0,0.03) 40deg, transparent 50%);
+            animation: rays-rotate 25s linear infinite; z-index: 2; pointer-events: none;
+        }
+        @keyframes rays-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .clouds-overlay {
+            position: fixed; inset: 0; z-index: 3; pointer-events: none;
+            background: url('https://www.transparenttextures.com/patterns/clouds.png');
+            opacity: 0.2; animation: clouds-move 60s linear infinite;
+        }
+        @keyframes clouds-move { from { background-position: 0 0; } to { background-position: 1000px 1000px; } }
 
         /* --- UI & ENTRANCE --- */
-        #overlay { position: fixed; inset: 0; z-index: 10; background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7)); pointer-events: none; }
-        #entrance-wrapper { position: fixed; inset: 0; z-index: 3000; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); transition: all 0.8s ease; }
-        .auth-card { text-align: center; cursor: pointer; padding: 40px; border-radius: 50px; border: 2px solid var(--accent); background: rgba(255,255,255,0.1); box-shadow: 0 0 30px var(--accent); }
-        .name-glitch { font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: #fff; text-shadow: 0 0 15px var(--accent); margin-bottom: 20px; }
-        .pulse-btn { width: 90px; height: 90px; border: 3px solid var(--accent); border-radius: 50%; margin: 20px auto; display: flex; align-items: center; justify-content: center; animation: pulse-anim 2s infinite; }
-        @keyframes pulse-anim { 0% { box-shadow: 0 0 0 0 rgba(255,215,0,0.7); } 70% { box-shadow: 0 0 0 15px rgba(255,215,0,0); } 100% { box-shadow: 0 0 0 0 rgba(255,215,0,0); } }
+        #entrance-wrapper { position: fixed; inset: 0; z-index: 3000; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); backdrop-filter: blur(15px); transition: 0.8s ease; }
+        .auth-card { text-align: center; cursor: pointer; padding: 50px; border-radius: 50px; border: 2px solid var(--accent); background: rgba(255,255,255,0.05); box-shadow: 0 0 40px var(--accent); }
+        .holy-cross { font-size: 3rem; color: var(--accent); text-shadow: 0 0 20px var(--accent); display: block; margin-bottom: 10px; animation: pulse-cross 2s infinite; }
+        @keyframes pulse-cross { 0%, 100% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.1); opacity: 1; } }
+        .pulse-btn { width: 100px; height: 100px; border: 4px solid var(--accent); border-radius: 50%; margin: 20px auto; display: flex; align-items: center; justify-content: center; animation: pulse-glow 2s infinite; }
+        @keyframes pulse-glow { 0% { box-shadow: 0 0 0 0 rgba(255,215,0,0.7); } 100% { box-shadow: 0 0 0 20px rgba(255,215,0,0); } }
 
-        /* --- MULTI-PAGE CELESTIAL SYSTEM --- */
-        #main-content { position: fixed; bottom: -100%; left: 0; width: 100%; height: 90vh; z-index: 200; transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
-        .glass-sheet { height: 100%; background: var(--holy-light); backdrop-filter: blur(25px); border-top-left-radius: 50px; border-top-right-radius: 50px; position: relative; box-shadow: 0 -10px 50px rgba(255, 133, 161, 0.2); overflow: hidden; border-top: 4px solid var(--accent); }
-        .page-container { display: flex; width: 300%; height: 100%; transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1); }
-        .page { width: 33.333%; height: 100%; padding: 40px 25px; text-align: center; flex-shrink: 0; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between; }
-
-        /* Icono de Cruz Sacra */
-        .holy-cross { font-size: 2.5rem; color: var(--accent); text-shadow: 0 0 15px var(--accent); margin-bottom: 10px; display: block; animation: glow-cross 3s infinite alternate; }
-        @keyframes glow-cross { from { opacity: 0.6; transform: scale(0.9); } to { opacity: 1; transform: scale(1.1); } }
-
-        .main-title { font-family: 'Great Vibes', cursive; font-size: 3.2rem; color: var(--primary); line-height: 1; text-shadow: 0 0 5px rgba(255,255,255,0.8); }
-        .sacred-text { font-size: 1.25rem; color: #555; font-style: italic; line-height: 1.5; margin: 15px 0; font-weight: 500; border: 1px solid rgba(255, 133, 161, 0.1); padding: 15px; border-radius: 20px; background: rgba(255,255,255,0.3); }
-        .family-section { text-align: left; border-left: 5px solid var(--accent); padding-left: 20px; margin-bottom: 15px; background: rgba(255,215,0,0.05); padding: 15px; border-radius: 0 20px 20px 0; }
-        .family-label { font-family: 'Orbitron'; font-size: 0.75rem; color: #b08d00; letter-spacing: 2px; font-weight: 900; margin-bottom: 8px; display: block; }
-        .family-names { font-size: 1.3rem; font-weight: 900; color: #333; margin-bottom: 10px; line-height: 1.2; }
-        .role { font-size: 0.7rem; color: var(--primary); font-family: 'Orbitron'; letter-spacing: 1px; font-weight: bold; }
-
-        .btn { display: block; padding: 16px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 10px; font-family: 'Orbitron', sans-serif; letter-spacing: 2px; text-align: center; border: none; cursor: pointer; font-size: 0.85rem; }
-        .btn-p { background: linear-gradient(90deg, var(--primary), #ffb4c5); color: #fff; width: 100%; box-shadow: 0 5px 15px rgba(255, 133, 161, 0.4); }
-        .btn-s { border: 2.3px solid var(--primary); color: var(--primary); width: 100%; background: transparent; }
-
-        .nav-dots { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 300; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(0,0,0,0.1); transition: 0.3s; }
-        .dot.active { background: var(--accent); width: 30px; border-radius: 5px; }
-        
-        /* Timer Sacro */
-        .countdown-container { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
-        .timer-box { background: white; padding: 6px; border-radius: 12px; min-width: 48px; border: 1px solid var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .timer-val { display: block; font-size: 1rem; font-weight: 900; font-family: 'Orbitron'; color: #333; }
-        .timer-label { font-size: 0.5rem; text-transform: uppercase; color: var(--primary); font-weight: bold; }
-
-        .active-content { bottom: 0 !important; }
-
-        @media (max-width: 480px) {
-            .main-title { font-size: 2.7rem; }
-            .sacred-text { font-size: 1.1rem; }
-            .page { padding: 35px 15px; }
+        /* --- MULTI-PAGE SYSTEM --- REDUCIDO A 55% DE ALTURA Y CENTRADO */
+        #main-content { 
+            position: fixed; 
+            bottom: -100%; 
+            left: 5%; 
+            right: 5%;
+            width: 90%; 
+            height: 55vh; 
+            z-index: 200; 
+            transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1); 
         }
+        .glass-sheet { 
+            height: 100%; 
+            background: rgba(255, 255, 255, 0.94); 
+            backdrop-filter: blur(25px); 
+            border-radius: 40px; 
+            position: relative; 
+            border: 3px solid var(--accent); 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5); 
+            overflow: hidden; 
+        }
+        .page-container { display: flex; width: 300%; height: 100%; transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1); }
+        .page { width: 33.333%; height: 100%; padding: 25px 20px; text-align: center; flex-shrink: 0; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-around; }
+
+        .main-title { font-family: 'Great Vibes', cursive; font-size: 2.2rem; color: var(--primary); text-shadow: 0 0 10px rgba(255,255,255,0.5); line-height: 1.1; }
+        .sacred-text { font-size: 0.95rem; color: #444; font-style: italic; line-height: 1.4; margin: 5px 0; background: rgba(255,215,0,0.05); padding: 12px; border-radius: 20px; border: 1px solid rgba(255,215,0,0.1); }
+        .family-section { text-align: left; border-left: 5px solid var(--accent); padding-left: 15px; margin-bottom: 5px; background: rgba(255,255,255,0.4); padding: 8px 15px; border-radius: 0 15px 15px 0; }
+        .family-label { font-family: 'Orbitron'; font-size: 0.6rem; color: #b08d00; letter-spacing: 2px; font-weight: 900; display: block; margin-bottom: 2px; }
+        .family-names { font-size: 1rem; font-weight: 900; color: #222; line-height: 1.2; }
+        .role { font-size: 0.55rem; color: var(--primary); font-family: 'Orbitron'; font-weight: bold; }
+
+        .btn { display: block; padding: 12px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 5px; font-family: 'Orbitron'; letter-spacing: 2px; text-align: center; border: none; cursor: pointer; font-size: 0.75rem; }
+        .btn-p { background: linear-gradient(90deg, var(--accent), #ffea00); color: #000; width: 100%; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); }
+        .btn-s { border: 2px solid var(--primary); color: var(--primary); width: 100%; background: transparent; }
+
+        /* Timer Ultra-Dynamic */
+        .countdown-container { display: flex; justify-content: center; gap: 3px; margin-top: 5px; }
+        .timer-box { background: white; padding: 4px; border-radius: 8px; min-width: 38px; border: 1px solid var(--accent); box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+        .timer-val { display: block; font-size: 0.75rem; font-weight: 900; font-family: 'Orbitron'; color: #333; }
+        .timer-label { font-size: 0.4rem; text-transform: uppercase; color: var(--primary); font-weight: bold; }
+
+        .active-content { bottom: 5% !important; }
+        .nav-dots { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 300; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(0,0,0,0.1); transition: 0.3s; }
+        .dot.active { background: var(--accent); width: 20px; border-radius: 4px; }
+
+        @media (max-width: 480px) { .main-title { font-size: 2.1rem; } .page { padding: 15px 10px; } .glass-sheet { border-radius: 30px; } }
     </style>
 </head>
 <body>
 
     <div id="stage"></div>
-    <div id="overlay"></div>
+    <div class="light-rays"></div>
+    <div class="clouds-overlay"></div>
 
     <div id="entrance-wrapper" onclick="startExperience()">
         <div class="auth-card">
             <span class="holy-cross">†</span>
-            <h1 class="name-glitch">Mi Primera Comunión</h1>
+            <h1 style="font-family: 'Great Vibes'; color: #fff; font-size: 2.8rem; margin-bottom: 20px;">Mi Primera Comunión</h1>
             <div class="pulse-btn"><span style="font-family: Orbitron; color:var(--accent); font-weight:900;">AMÉN</span></div>
-            <p style="color: #fff; letter-spacing: 5px; font-size: 0.7rem;">SOFIA MILAGROS</p>
+            <p style="color: #fff; letter-spacing: 5px; font-size: 0.7rem; font-weight: bold;">SOFIA MILAGROS</p>
         </div>
     </div>
 
@@ -102,63 +112,53 @@
         <div class="glass-sheet">
             <div class="page-container" id="pageContainer">
                 
-                <!-- HOJA 1: MI COMUNIÓN -->
+                <!-- HOJA 1 -->
                 <div class="page" id="page1">
                     <div>
-                        <span class="holy-cross">†</span>
-                        <p style="font-family: Orbitron; font-size: 0.9rem; color: var(--accent); letter-spacing: 3px; font-weight: 900;">INVITACIÓN SAGRADA</p>
+                        <span class="holy-cross" style="color:var(--primary); font-size: 1.4rem; margin-bottom: 2px;">†</span>
+                        <p style="font-family: Orbitron; font-size: 0.6rem; color: var(--accent); letter-spacing: 2px; font-weight: 900;">INVITACIÓN SAGRADA</p>
                         <h1 class="main-title">Sofia Milagros</h1>
-                        <p style="letter-spacing: 6px; color: #888; font-size: 0.9rem; font-weight: bold; margin-bottom: 10px;">GIL MANJARREZ</p>
+                        <p style="letter-spacing: 4px; color: #888; font-weight: bold; font-size: 0.7rem; margin-bottom: 2px;">GIL MANJARREZ</p>
                     </div>
-                    
-                    <p class="sacred-text">
-                        "Hoy recibo a Jesús en mi corazón por primera vez. Su luz divina guiará mis pasos y su amor infinito me acompañará siempre. Te invito a compartir conmigo esta bendición."
-                    </p>
-                    
+                    <p class="sacred-text">"Hoy recibo a Jesús en mi corazón por primera vez. Su luz divina guiará mis pasos y su amor infinito me acompañará siempre."</p>
                     <button onclick="goToPage(1)" class="btn btn-p">SIGUIENTE</button>
                 </div>
 
-                <!-- HOJA 2: PADRES Y PADRINOS -->
+                <!-- HOJA 2 -->
                 <div class="page" id="page2">
                     <div>
-                        <span class="holy-cross">†</span>
-                        <h1 class="main-title" style="font-size: 2.8rem;">Familiares</h1>
+                        <span class="holy-cross" style="color:var(--accent); font-size: 1.4rem; margin-bottom: 2px;">†</span>
+                        <h1 class="main-title" style="font-size: 2.1rem;">Familiares</h1>
                     </div>
-                    
                     <div class="family-section">
                         <span class="family-label">CON LA BENDICIÓN DE MIS PADRES:</span>
-                        <div style="margin-bottom: 15px;">
-                            <p class="family-names"><span class="role">PADRE:</span> Manuel Gil Primo</p>
-                            <p class="family-names"><span class="role">MADRE:</span> Sonia Manjarrez Becerril</p>
-                        </div>
-                        
-                        <span class="family-label">MIS PADRINOS:</span>
-                        <div>
-                            <p class="family-names"><span class="role">MADRINA:</span> Maria Elisa Garcia Francisco</p>
-                        </div>
+                        <p class="family-names"><span class="role">PADRE:</span> Manuel Gil Primo</p>
+                        <p class="family-names"><span class="role">MADRE:</span> Sonia Manjarrez Becerril</p>
                     </div>
-                    
+                    <div class="family-section">
+                        <span class="family-label">MIS PADRINOS:</span>
+                        <p class="family-names"><span class="role">MADRINA:</span> Maria Elisa Garcia Francisco</p>
+                    </div>
                     <button onclick="goToPage(2)" class="btn btn-p">SIGUIENTE</button>
                 </div>
 
-                <!-- HOJA 3: FECHA, LUGARES Y CUENTA REGRESIVA -->
+                <!-- HOJA 3 -->
                 <div class="page" id="page3">
                     <div>
-                        <span class="holy-cross">†</span>
-                        <h1 class="main-title" style="font-size: 2.5rem;">Fecha y Lugar</h1>
+                        <h1 class="main-title" style="font-size: 2rem;">Fecha y Lugar</h1>
                     </div>
                     
-                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
                         <div class="family-section" style="margin-bottom: 0;">
                             <span class="family-label">CEREMONIA RELIGIOSA - 08:00 AM</span>
-                            <p class="family-names" style="font-size: 1.1rem; margin-bottom: 5px;">Parroquia [Nombre de Iglesia]</p>
-                            <a href="https://maps.google.com" target="_blank" class="btn btn-p" style="padding: 10px; margin-top: 0; font-size: 0.7rem;">UBICACIÓN MISA</a>
+                            <p class="family-names" style="font-size: 0.85rem; margin-bottom: 2px;">Santuario de Nuestra Sra. de Guadalupe</p>
+                            <a href="https://maps.app.goo.gl/5yZE5KraMCfyQfmC7" target="_blank" class="btn btn-p" style="padding: 8px; margin-top: 0; font-size: 0.6rem;">UBICACIÓN MISA</a>
                         </div>
 
                         <div class="family-section" style="margin-bottom: 0;">
                             <span class="family-label">LUGAR DEL EVENTO - 01:00 PM</span>
-                            <p class="family-names" style="font-size: 1.1rem; margin-bottom: 5px;">Ubicación del evento</p>
-                            <a href="https://www.google.com/maps/search/?api=1&query=19.226944,-99.684083" target="_blank" class="btn btn-p" style="padding: 10px; margin-top: 0; font-size: 0.7rem;">GPS EVENTO</a>
+                            <p class="family-names" style="font-size: 0.85rem; margin-bottom: 2px;">1 de Agosto, 2026</p>
+                            <a href="https://www.google.com/maps/search/?api=1&query=19.226944,-99.684083" target="_blank" class="btn btn-p" style="padding: 8px; margin-top: 0; font-size: 0.6rem;">GPS EVENTO</a>
                         </div>
                     </div>
 
@@ -167,45 +167,33 @@
                         <div class="timer-box"><span id="hours" class="timer-val">00</span><span class="timer-label">Hrs</span></div>
                         <div class="timer-box"><span id="minutes" class="timer-val">00</span><span class="timer-label">Min</span></div>
                         <div class="timer-box"><span id="seconds" class="timer-val">00</span><span class="timer-label">Seg</span></div>
-                        <div class="timer-box"><span id="millis" class="timer-val">000</span><span class="timer-label">Ms</span></div>
+                        <div class="timer-box"><span id="millis" class="timer-val" style="color:var(--primary); font-size: 0.55rem;">000</span><span class="timer-label">Ms</span></div>
                     </div>
                     
-                    <button onclick="goToPage(0)" class="btn btn-s" style="border:none; margin-top: 0;">VOLVER AL INICIO</button>
+                    <button onclick="goToPage(0)" class="btn btn-s" style="border:none; margin-top: 0;">INICIO</button>
                 </div>
 
             </div>
-            <div class="nav-dots">
-                <div class="dot active" id="dot0"></div>
-                <div class="dot" id="dot1"></div>
-                <div class="dot" id="dot2"></div>
-            </div>
+            <div class="nav-dots"><div class="dot active" id="dot0"></div><div class="dot" id="dot1"></div><div class="dot" id="dot2"></div></div>
         </div>
     </div>
 
     <script>
         const photos = ['app/img/foto1.jpg', 'app/img/foto2.jpg', 'app/img/foto3.jpg', 'app/img/foto4.jpg', 'app/img/foto5.jpg', 'app/img/foto6.jpg'];
-        const edits = ['edit-kenburns', 'edit-glitch', 'edit-3d', 'edit-vslide', 'edit-grid', 'edit-hearts'];
         const stage = document.getElementById('stage');
-        photos.forEach((src, index) => {
+        photos.forEach((src, i) => {
             const frame = document.createElement('div');
-            frame.className = `photo-frame`;
-            if (index % 5 === 4) {
-                frame.classList.add('edit-grid');
-                frame.innerHTML = `<div class="clone c1"><img src="${src}"></div><div class="clone c2"><img src="${src}"></div><div class="clone c3"><img src="${src}"></div><div class="clone c4"><img src="${src}"></div>`;
-            } else { frame.innerHTML = `<img src="${src}">`; }
+            frame.className = `photo-frame ${i===0?'active edit-kenburns':''}`;
+            frame.innerHTML = `<img src="${src}">`;
             stage.appendChild(frame);
         });
         const frames = document.querySelectorAll('.photo-frame');
         let current = 0;
-        function nextFrame() {
-            frames[current].classList.remove('active');
-            edits.forEach(e => frames[current].classList.remove(e));
+        setInterval(() => {
+            frames[current].classList.remove('active', 'edit-kenburns');
             current = (current + 1) % frames.length;
-            const randomEdit = edits[Math.floor(Math.random() * edits.length)];
-            frames[current].classList.add('active', randomEdit);
-        }
-        frames[0].classList.add('active', 'edit-kenburns');
-        setInterval(nextFrame, 4000);
+            frames[current].classList.add('active', 'edit-kenburns');
+        }, 5000);
 
         function goToPage(index) {
             document.getElementById('pageContainer').style.transform = `translateX(-${index * 33.333}%)`;
@@ -228,7 +216,7 @@
                 document.getElementById('seconds').innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
                 document.getElementById('millis').innerText = (diff % 1000).toString().padStart(3, '0');
             }
-        }, 50);
+        }, 40);
     </script>
 </body>
 </html>
