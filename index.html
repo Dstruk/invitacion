@@ -15,7 +15,7 @@
         body { background: #000; font-family: 'Rajdhani', sans-serif; height: 100vh; width: 100vw; overflow: hidden; }
 
         /* --- CONTENEDOR DE EDICIONES (SCENES) --- */
-        #stage { position: fixed; inset: 0; z-index: 1; }
+        #stage { position: fixed; inset: 0; z-index: 1; background: #000; }
         
         .photo-frame {
             position: absolute;
@@ -24,6 +24,7 @@
             opacity: 0;
             display: none;
             transition: opacity 1s ease;
+            overflow: hidden;
         }
         .photo-frame.active { display: block; opacity: 1; }
 
@@ -33,94 +34,135 @@
             object-fit: cover;
         }
 
-        /* --- EDICIÓN 1: KEN BURNS ZOOM --- */
-        .edit-kenburns img { animation: kenburns 8s linear infinite alternate; }
-        @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.3) translate(20px, 10px); } }
+        /* --- LAS 10 EDICIONES TIPO TIKTOK --- */
+        
+        /* 1. Ken Burns (Zoom Pro) */
+        .edit-kenburns img { animation: kenburns 10s linear infinite alternate; }
+        @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.4) translate(10px, 5px); } }
 
-        /* --- EDICIÓN 2: GLITCH SPLIT --- */
-        .edit-glitch { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
-        .edit-glitch.active img { animation: glitch-anim 0.4s infinite; }
+        /* 2. Glitch Intense */
+        .edit-glitch.active img { animation: glitch-anim 0.2s infinite; }
         @keyframes glitch-anim {
-            0% { transform: translate(0); filter: hue-rotate(0deg); }
-            20% { transform: translate(-5px, 5px); filter: hue-rotate(90deg); }
-            40% { transform: translate(-5px, -5px); }
-            60% { transform: translate(5px, 5px); filter: hue-rotate(180deg); }
-            80% { transform: translate(5px, -5px); }
+            0% { transform: translate(0); filter: hue-rotate(0deg) contrast(1.2); }
+            25% { transform: translate(-8px, 4px); filter: hue-rotate(45deg); }
+            50% { transform: translate(8px, -4px); opacity: 0.8; }
+            75% { transform: translate(-4px, -8px); filter: invert(0.1); }
             100% { transform: translate(0); }
         }
 
-        /* --- EDICIÓN 3: 3D TILT --- */
-        .edit-3d { perspective: 1000px; }
-        .edit-3d img { animation: tilt-3d 5s ease-in-out infinite alternate; }
-        @keyframes tilt-3d { from { transform: rotateY(-15deg) rotateX(5deg); } to { transform: rotateY(15deg) rotateX(-5deg); } }
+        /* 3. 3D Floating tilt */
+        .edit-3d { perspective: 1200px; }
+        .edit-3d img { animation: tilt-3d 6s ease-in-out infinite alternate; }
+        @keyframes tilt-3d { from { transform: rotateY(-20deg) scale(1.1); } to { transform: rotateY(20deg) scale(1.1); } }
 
-        /* --- EDICIÓN 4: VERTICAL SLIDE --- */
-        .edit-vslide img { animation: v-slide 10s ease-in-out infinite; }
-        @keyframes v-slide { 0%, 100% { object-position: center top; } 50% { object-position: center bottom; } }
+        /* 4. Vertical Slide Sweep */
+        .edit-vslide img { animation: v-slide 8s ease-in-out infinite alternate; }
+        @keyframes v-slide { from { object-position: center 0%; transform: scale(1.2); } to { object-position: center 100%; transform: scale(1.2); } }
 
-        /* --- EDICIÓN 5: MIRROR MULTI (GRID) --- */
-        .edit-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+        /* 5. Mirror Grid 2x2 */
+        .edit-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; background: #000; }
         .edit-grid .clone { width: 100%; height: 100%; overflow: hidden; position: relative; }
-        .edit-grid .clone img { position: absolute; width: 200%; height: 200%; object-fit: cover; }
+        .edit-grid .clone img { position: absolute; width: 200%; height: 200%; object-fit: cover; animation: grid-pulse 4s infinite alternate; }
+        @keyframes grid-pulse { from { transform: scale(1); } to { transform: scale(1.1); } }
         .edit-grid .c1 img { top: 0; left: 0; }
-        .edit-grid .c2 img { top: 0; right: 0; }
-        .edit-grid .c3 img { bottom: 0; left: 0; }
-        .edit-grid .c4 img { bottom: 0; right: 0; }
+        .edit-grid .c2 img { top: 0; right: 0; filter: hue-rotate(90deg); }
+        .edit-grid .c3 img { bottom: 0; left: 0; filter: saturate(2); }
+        .edit-grid .c4 img { bottom: 0; right: 0; filter: contrast(1.5); }
+
+        /* 6. Flash Shake */
+        .edit-shake.active { animation: shake-flash 0.5s ease-out; }
+        @keyframes shake-flash {
+            0% { filter: brightness(5) contrast(2); transform: scale(1.2); }
+            100% { filter: brightness(1) contrast(1); transform: scale(1); }
+        }
+
+        /* 7. Zoom Blur In */
+        .edit-blur img { animation: zoom-blur 5s ease-out forwards; }
+        @keyframes zoom-blur {
+            0% { transform: scale(2); filter: blur(20px); opacity: 0; }
+            100% { transform: scale(1); filter: blur(0px); opacity: 1; }
+        }
+
+        /* 8. Kaleidoscope / Spin */
+        .edit-spin img { animation: slow-spin 20s linear infinite; transform: scale(1.5); }
+        @keyframes slow-spin { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
+
+        /* 9. RGB Split Static */
+        .edit-rgb img { filter: drop-shadow(4px 0px 0px #ff0000) drop-shadow(-4px 0px 0px #00f2ff); transform: scale(1.05); }
+
+        /* 10. Floating Heart Particles overlay */
+        .edit-hearts::after {
+            content: '❤'; color: var(--primary); font-size: 2rem; position: absolute;
+            animation: fly-hearts 3s infinite linear; text-shadow: 0 0 10px #fff;
+        }
+        @keyframes fly-hearts {
+            0% { bottom: -10%; left: 20%; opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2) rotate(20deg); }
+            100% { bottom: 110%; left: 80%; opacity: 0; transform: scale(0.8); }
+        }
 
         /* --- UI & ENTRANCE --- */
         #overlay { position: fixed; inset: 0; z-index: 10; background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8)); pointer-events: none; }
         
-        #entrance-wrapper { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); }
-        .auth-card { text-align: center; cursor: pointer; padding: 40px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,133,161,0.1); }
-        .name-glitch { font-family: 'Great Vibes', cursive; font-size: 4rem; color: #fff; text-shadow: 0 0 20px var(--primary); }
+        #entrance-wrapper { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); transition: all 0.8s ease; }
         
-        #main-content { position: fixed; bottom: -100%; left: 0; width: 100%; height: 80vh; z-index: 200; transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
-        .glass-sheet { height: 100%; background: rgba(255,255,255,0.9); backdrop-filter: blur(30px); border-top-left-radius: 50px; border-top-right-radius: 50px; padding: 50px 30px; text-align: center; }
+        .auth-card { text-align: center; cursor: pointer; padding: 40px; border-radius: 50px; border: 2px solid rgba(255,255,255,0.4); background: rgba(255,133,161,0.2); box-shadow: 0 0 40px rgba(255,133,161,0.3); }
         
-        .btn { display: block; padding: 20px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 15px; }
-        .btn-p { background: var(--primary); color: #fff; }
+        .name-glitch { font-family: 'Great Vibes', cursive; font-size: 4rem; color: #fff; text-shadow: 0 0 20px var(--primary); margin-bottom: 20px; }
+        
+        .pulse-btn { width: 100px; height: 100px; border: 3px solid #fff; border-radius: 50%; margin: 20px auto; display: flex; align-items: center; justify-content: center; animation: pulse-anim 2s infinite; background: rgba(255,255,255,0.1); }
+        
+        @keyframes pulse-anim { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0.7); } 70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(255,255,255,0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0); } }
+        
+        #main-content { position: fixed; bottom: -100%; left: 0; width: 100%; height: 85vh; z-index: 200; transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+        .glass-sheet { height: 100%; background: rgba(255,255,255,0.95); backdrop-filter: blur(30px); border-top-left-radius: 50px; border-top-right-radius: 50px; padding: 50px 30px; text-align: center; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); overflow-y: auto; }
+        
+        .btn { display: block; padding: 20px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 15px; font-family: 'Orbitron', sans-serif; letter-spacing: 2px; }
+        .btn-p { background: var(--primary); color: #fff; box-shadow: 0 10px 20px rgba(255, 133, 161, 0.4); }
         .btn-s { border: 2px solid var(--primary); color: var(--primary); }
 
         .active-content { bottom: 0 !important; }
+        
+        .hidden { opacity: 0; pointer-events: none; }
     </style>
 </head>
 <body>
 
-    <!-- Fondos Dinámicos -->
-    <div id="stage">
-        <!-- Las fotos se inyectan por JS para aplicar los estilos de edición -->
-    </div>
+    <!-- Fondos Dinámicos con Ediciones -->
+    <div id="stage"></div>
 
     <div id="overlay"></div>
 
     <div id="entrance-wrapper" onclick="startExperience()">
         <div class="auth-card">
             <h1 class="name-glitch">Sofia Milagros</h1>
-            <div style="width: 80px; height: 80px; border: 2px solid #fff; border-radius: 50%; margin: 20px auto; display: flex; align-items: center; justify-content: center; animation: pulse 2s infinite;">
-                <span style="font-family: Orbitron; font-size: 0.7rem;">INIT</span>
+            <div class="pulse-btn">
+                <span style="font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 900; color: #fff;">INIT</span>
             </div>
-            <p style="color: #fff; letter-spacing: 5px; font-size: 0.8rem;">TAP TO LAUNCH EDIT</p>
+            <p style="color: #fff; letter-spacing: 5px; font-size: 0.8rem; text-transform: uppercase;">Tap to Launch Experience</p>
         </div>
     </div>
 
     <div id="main-content">
         <div class="glass-sheet">
-            <h1 style="font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--primary);">Sofia Milagros</h1>
-            <p style="letter-spacing: 5px; color: #888; margin-bottom: 30px;">GIL MANJARREZ</p>
+            <h1 style="font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--primary);">Sofia Milagros</h1>
+            <p style="letter-spacing: 5px; color: #888; margin-bottom: 30px; font-weight: bold;">GIL MANJARREZ</p>
             
             <div style="text-align: left; margin-bottom: 40px;">
-                <div style="border-left: 4px solid var(--primary); padding-left: 15px; margin-bottom: 20px;">
-                    <span style="color: var(--primary); font-size: 0.7rem; font-weight: bold;">TIMELINE</span>
-                    <p style="font-size: 1.2rem; font-weight: bold;">26.07.2026 / 20:00</p>
+                <div style="border-left: 5px solid var(--primary); padding-left: 20px; margin-bottom: 25px;">
+                    <span style="color: var(--primary); font-size: 0.8rem; font-weight: 900; letter-spacing: 2px;">FECHA Y HORA</span>
+                    <p style="font-size: 1.4rem; font-weight: bold; color: #333;">26.07.2026 / 20:00</p>
                 </div>
-                <div style="border-left: 4px solid var(--primary); padding-left: 15px;">
-                    <span style="color: var(--primary); font-size: 0.7rem; font-weight: bold;">NODE COORDINATES</span>
-                    <p style="font-size: 1.2rem; font-weight: bold;">CASA DE SOFÍA</p>
+                <div style="border-left: 5px solid var(--primary); padding-left: 20px;">
+                    <span style="color: var(--primary); font-size: 0.8rem; font-weight: 900; letter-spacing: 2px;">LUGAR DEL EVENTO</span>
+                    <p style="font-size: 1.4rem; font-weight: bold; color: #333;">CASA DE SOFÍA</p>
+                    <p style="color: #666;">Av. Futura 777, Col. Diamante</p>
                 </div>
             </div>
 
-            <a href="https://wa.me/521?text=CONFIRMO_ASISTENCIA" class="btn btn-p">CONFIRM ACCESS</a>
-            <a href="https://maps.google.com" class="btn btn-s">MAPS LOCATION</a>
+            <a href="https://wa.me/521?text=CONFIRMO_ASISTENCIA_SOFIA" class="btn btn-p">CONFIRMAR ACCESO</a>
+            <a href="https://maps.google.com" target="_blank" class="btn btn-s">UBICACIÓN GPS</a>
+            <p style="margin-top: 30px; font-size: 0.7rem; color: #bbb; letter-spacing: 2px;">SECURE ACCESS GRANTED</p>
         </div>
     </div>
 
@@ -130,18 +172,23 @@
             'app/img/foto4.jpg', 'app/img/foto5.jpg', 'app/img/foto6.jpg'
         ];
 
-        // Tipos de "Ediciones" tipo TikTok
-        const edits = ['edit-kenburns', 'edit-glitch', 'edit-3d', 'edit-vslide', 'edit-grid'];
+        // Las 10 Ediciones Estilo TikTok
+        const edits = [
+            'edit-kenburns', 'edit-glitch', 'edit-3d', 'edit-vslide', 
+            'edit-grid', 'edit-shake', 'edit-blur', 'edit-spin', 
+            'edit-rgb', 'edit-hearts'
+        ];
         
         const stage = document.getElementById('stage');
 
-        // Generar frames con ediciones aleatorias
+        // Generar frames
         photos.forEach((src, index) => {
             const frame = document.createElement('div');
-            const randomEdit = edits[Math.floor(Math.random() * edits.length)];
-            frame.className = `photo-frame ${randomEdit}`;
+            frame.className = `photo-frame`;
             
-            if (randomEdit === 'edit-grid') {
+            // Si es grid, necesita estructura especial
+            if (index % 5 === 4) { // Cada 5 fotos una tipo Grid
+                frame.classList.add('edit-grid');
                 frame.innerHTML = `
                     <div class="clone c1"><img src="${src}"></div>
                     <div class="clone c2"><img src="${src}"></div>
@@ -158,27 +205,37 @@
         let current = 0;
 
         function nextFrame() {
+            // Limpiar clases de edición previas
             frames[current].classList.remove('active');
-            current = (current + 1) % frames.length;
-            frames[current].classList.add('active');
+            edits.forEach(e => frames[current].classList.remove(e));
             
-            // Cada cambio de foto puede cambiar el estilo de edición
+            // Siguiente foto
+            current = (current + 1) % frames.length;
+            
+            // Asignar nueva edición aleatoria
             const randomEdit = edits[Math.floor(Math.random() * edits.length)];
-            frames[current].className = `photo-frame active ${randomEdit}`;
+            frames[current].classList.add('active');
+            frames[current].classList.add(randomEdit);
         }
 
+        // Iniciar primera foto
         frames[0].classList.add('active');
+        frames[0].classList.add('edit-kenburns');
+        
         setInterval(nextFrame, 4000);
 
         function startExperience() {
-            document.getElementById('entrance-wrapper').style.opacity = '0';
+            const wrapper = document.getElementById('entrance-wrapper');
+            const main = document.getElementById('main-content');
+            
+            wrapper.style.opacity = '0';
+            wrapper.style.transform = 'scale(1.5)';
+            
             setTimeout(() => {
-                document.getElementById('entrance-wrapper').style.display = 'none';
-                document.getElementById('main-content').classList.add('active-content');
+                wrapper.style.display = 'none';
+                main.classList.add('active-content');
             }, 800);
         }
-
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
     </script>
 </body>
 </html>
