@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOFIA MILAGROS | THE EXPERIENCE</title>
+    <title>SOFIA MILAGROS | MI COMUNIÓN</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,28 +16,13 @@
 
         /* --- CONTENEDOR DE EDICIONES (SCENES) --- */
         #stage { position: fixed; inset: 0; z-index: 1; background: #000; }
-        
-        .photo-frame {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            display: none;
-            transition: opacity 1s ease;
-            overflow: hidden;
-        }
+        .photo-frame { position: absolute; width: 100%; height: 100%; opacity: 0; display: none; transition: opacity 1s ease; overflow: hidden; }
         .photo-frame.active { display: block; opacity: 1; }
-
-        .photo-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
 
         /* --- EDICIONES TIPO TIKTOK --- */
         .edit-kenburns img { animation: kenburns 10s linear infinite alternate; }
         @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.4) translate(10px, 5px); } }
-
         .edit-glitch.active img { animation: glitch-anim 0.2s infinite; }
         @keyframes glitch-anim {
             0% { transform: translate(0); filter: hue-rotate(0deg) contrast(1.2); }
@@ -46,100 +31,47 @@
             75% { transform: translate(-4px, -8px); filter: invert(0.1); }
             100% { transform: translate(0); }
         }
-
         .edit-3d { perspective: 1200px; }
         .edit-3d img { animation: tilt-3d 6s ease-in-out infinite alternate; }
         @keyframes tilt-3d { from { transform: rotateY(-20deg) scale(1.1); } to { transform: rotateY(20deg) scale(1.1); } }
-
-        .edit-vslide img { animation: v-slide 8s ease-in-out infinite alternate; }
-        @keyframes v-slide { from { object-position: center 0%; transform: scale(1.2); } to { object-position: center 100%; transform: scale(1.2); } }
-
         .edit-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; background: #000; }
         .edit-grid .clone { width: 100%; height: 100%; overflow: hidden; position: relative; }
-        .edit-grid .clone img { position: absolute; width: 200%; height: 200%; object-fit: cover; animation: grid-pulse 4s infinite alternate; }
-        @keyframes grid-pulse { from { transform: scale(1); } to { transform: scale(1.1); } }
+        .edit-grid .clone img { position: absolute; width: 200%; height: 200%; object-fit: cover; }
         .edit-grid .c1 img { top: 0; left: 0; }
         .edit-grid .c2 img { top: 0; right: 0; filter: hue-rotate(90deg); }
         .edit-grid .c3 img { bottom: 0; left: 0; filter: saturate(2); }
         .edit-grid .c4 img { bottom: 0; right: 0; filter: contrast(1.5); }
-
-        .edit-shake.active { animation: shake-flash 0.5s ease-out; }
-        @keyframes shake-flash {
-            0% { filter: brightness(5) contrast(2); transform: scale(1.2); }
-            100% { filter: brightness(1) contrast(1); transform: scale(1); }
-        }
-
-        .edit-blur img { animation: zoom-blur 5s ease-out forwards; }
-        @keyframes zoom-blur {
-            0% { transform: scale(2); filter: blur(20px); opacity: 0; }
-            100% { transform: scale(1); filter: blur(0px); opacity: 1; }
-        }
-
-        .edit-spin img { animation: slow-spin 20s linear infinite; transform: scale(1.5); }
-        @keyframes slow-spin { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
-
-        .edit-rgb img { filter: drop-shadow(4px 0px 0px #ff0000) drop-shadow(-4px 0px 0px #00f2ff); transform: scale(1.05); }
-
-        .edit-hearts::after {
-            content: '❤'; color: var(--primary); font-size: 2rem; position: absolute;
-            animation: fly-hearts 3s infinite linear; text-shadow: 0 0 10px #fff;
-        }
-        @keyframes fly-hearts {
-            0% { bottom: -10%; left: 20%; opacity: 0; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.2) rotate(20deg); }
-            100% { bottom: 110%; left: 80%; opacity: 0; transform: scale(0.8); }
-        }
+        .edit-hearts::after { content: '❤'; color: var(--primary); font-size: 2rem; position: absolute; animation: fly-hearts 3s infinite linear; text-shadow: 0 0 10px #fff; }
+        @keyframes fly-hearts { 0% { bottom: -10%; left: 20%; opacity: 0; transform: scale(0.5); } 100% { bottom: 110%; left: 80%; opacity: 0; transform: scale(0.8); } }
 
         /* --- UI & ENTRANCE --- */
         #overlay { position: fixed; inset: 0; z-index: 10; background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8)); pointer-events: none; }
-        
         #entrance-wrapper { position: fixed; inset: 0; z-index: 3000; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); transition: all 0.8s ease; }
-        
         .auth-card { text-align: center; cursor: pointer; padding: 40px; border-radius: 50px; border: 2px solid rgba(255,255,255,0.4); background: rgba(255,133,161,0.2); box-shadow: 0 0 40px rgba(255,133,161,0.3); }
-        
         .name-glitch { font-family: 'Great Vibes', cursive; font-size: 4rem; color: #fff; text-shadow: 0 0 20px var(--primary); margin-bottom: 20px; }
-        
         .pulse-btn { width: 100px; height: 100px; border: 3px solid #fff; border-radius: 50%; margin: 20px auto; display: flex; align-items: center; justify-content: center; animation: pulse-anim 2s infinite; background: rgba(255,255,255,0.1); }
-        
         @keyframes pulse-anim { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0.7); } 70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(255,255,255,0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0); } }
         
-        /* --- MULTI-PAGE SYSTEM --- */
+        /* --- MULTI-PAGE SYSTEM (3 PAGES) --- */
         #main-content { position: fixed; bottom: -100%; left: 0; width: 100%; height: 85vh; z-index: 200; transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
-        .glass-sheet { height: 100%; background: rgba(255,255,255,0.95); backdrop-filter: blur(30px); border-top-left-radius: 50px; border-top-right-radius: 50px; position: relative; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); overflow: hidden; }
+        .glass-sheet { height: 100%; background: rgba(255,255,255,0.96); backdrop-filter: blur(30px); border-top-left-radius: 50px; border-top-right-radius: 50px; position: relative; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); overflow: hidden; }
+        .page-container { display: flex; width: 300%; height: 100%; transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1); }
+        .page { width: 33.333%; height: 100%; padding: 40px 25px; text-align: center; flex-shrink: 0; overflow-y: auto; }
 
-        .page-container {
-            display: flex;
-            width: 300%; 
-            height: 100%;
-            transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
-        }
+        .main-title { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--primary); margin-bottom: 5px; }
+        .sacred-text { font-size: 1.1rem; color: #666; font-style: italic; line-height: 1.5; margin: 20px 0; }
+        .family-section { margin-top: 30px; text-align: left; border-left: 4px solid var(--primary); padding-left: 20px; }
+        .family-label { font-family: 'Orbitron'; font-size: 0.7rem; color: var(--primary); letter-spacing: 2px; font-weight: bold; }
+        .family-names { font-size: 1.2rem; font-weight: bold; color: #333; margin-bottom: 15px; }
 
-        .page {
-            width: 33.333%;
-            height: 100%;
-            padding: 50px 30px;
-            text-align: center;
-            flex-shrink: 0;
-            overflow-y: auto;
-        }
-
-        .main-title { font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--primary); }
-        .data-row { border-left: 5px solid var(--primary); padding: 10px 15px; text-align: left; margin: 20px 0; background: rgba(255,133,161,0.05); }
-        
-        .btn { display: block; padding: 20px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 15px; font-family: 'Orbitron', sans-serif; letter-spacing: 2px; text-align: center; border: none; cursor: pointer; }
-        .btn-p { background: var(--primary); color: #fff; box-shadow: 0 10px 20px rgba(255, 133, 161, 0.4); width: 100%; }
+        .btn { display: block; padding: 18px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 15px; font-family: 'Orbitron', sans-serif; letter-spacing: 2px; text-align: center; border: none; cursor: pointer; }
+        .btn-p { background: var(--primary); color: #fff; width: 100%; }
         .btn-s { border: 2px solid var(--primary); color: var(--primary); width: 100%; background: transparent; }
 
-        .input-group { margin-bottom: 20px; text-align: left; }
-        .input-group label { display: block; font-family: 'Orbitron'; font-size: 0.7rem; color: var(--primary); letter-spacing: 2px; margin-bottom: 8px; font-weight: bold; }
-        .input-group input, .input-group textarea { width: 100%; padding: 15px; border-radius: 15px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.5); font-family: 'Rajdhani'; font-size: 1.1rem; }
-
+        .nav-dots { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 300; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(0,0,0,0.1); transition: 0.3s; }
+        .dot.active { background: var(--primary); width: 25px; border-radius: 5px; }
         .active-content { bottom: 0 !important; }
-        
-        .nav-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 300; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(0,0,0,0.1); transition: 0.3s; }
-        .dot.active { background: var(--primary); width: 30px; border-radius: 5px; }
-
     </style>
 </head>
 <body>
@@ -149,11 +81,9 @@
 
     <div id="entrance-wrapper" onclick="startExperience()">
         <div class="auth-card">
-            <h1 class="name-glitch">Sofia Milagros</h1>
-            <div class="pulse-btn">
-                <span style="font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 900; color: #fff;">INIT</span>
-            </div>
-            <p style="color: #fff; letter-spacing: 5px; font-size: 0.8rem; text-transform: uppercase;">Tap to Launch Experience</p>
+            <h1 class="name-glitch">Mi Primera Comunión</h1>
+            <div class="pulse-btn"><span style="font-family: Orbitron; color:#fff; font-weight:900;">INIT</span></div>
+            <p style="color: #fff; letter-spacing: 5px; font-size: 0.7rem; text-transform: uppercase;">Sofia Milagros</p>
         </div>
     </div>
 
@@ -161,68 +91,46 @@
         <div class="glass-sheet">
             <div class="page-container" id="pageContainer">
                 
-                <!-- HOJA 1: INVITACIÓN -->
+                <!-- HOJA 1: MI COMUNIÓN -->
                 <div class="page" id="page1">
+                    <p style="letter-spacing: 3px; color: var(--primary); font-weight: bold; font-size: 0.8rem; text-transform: uppercase;">Mi Primera Comunión</p>
                     <h1 class="main-title">Sofia Milagros</h1>
-                    <p style="letter-spacing: 5px; color: #888; margin-bottom: 30px; font-weight: bold;">GIL MANJARREZ</p>
-                    
-                    <div style="text-align: left; margin-bottom: 30px;">
-                        <div style="border-left: 5px solid var(--primary); padding-left: 20px; margin-bottom: 20px;">
-                            <span style="color: var(--primary); font-size: 0.8rem; font-weight: 900; letter-spacing: 2px;">FECHA Y HORA</span>
-                            <p style="font-size: 1.4rem; font-weight: bold; color: #333;">26.07.2026 / 20:00</p>
-                        </div>
-                        <div style="border-left: 5px solid var(--primary); padding-left: 20px;">
-                            <span style="color: var(--primary); font-size: 0.8rem; font-weight: 900; letter-spacing: 2px;">LUGAR DEL EVENTO</span>
-                            <p style="font-size: 1.4rem; font-weight: bold; color: #333;">CASA DE SOFÍA</p>
-                        </div>
-                    </div>
-
+                    <p style="letter-spacing: 4px; color: #888; font-size: 0.8rem; margin-bottom: 20px;">GIL MANJARREZ</p>
+                    <p class="sacred-text">
+                        "Hoy recibo a Jesús en mi corazón por primera vez. Su luz guiará mis pasos y su amor me acompañará siempre. Te invito a compartir conmigo esta alegría."
+                    </p>
                     <button onclick="goToPage(1)" class="btn btn-p">SIGUIENTE</button>
-                    <a href="https://maps.google.com" target="_blank" class="btn btn-s">UBICACIÓN GPS</a>
                 </div>
 
-                <!-- HOJA 2: MI CONFIRMACIÓN -->
+                <!-- HOJA 2: PADRES Y PADRINOS -->
                 <div class="page" id="page2">
-                    <h1 class="main-title" style="font-size: 2.5rem;">Mi Confirmación</h1>
-                    <p style="color: #888; margin-bottom: 30px;">¡Nos encantaría que nos acompañes!</p>
-
-                    <div class="input-group">
-                        <label>TU NOMBRE</label>
-                        <input type="text" id="guestName" placeholder="Escribe tu nombre">
+                    <h1 class="main-title" style="font-size: 2.5rem;">Mis Padres y Padrinos</h1>
+                    <div class="family-section">
+                        <span class="family-label">MIS PADRES:</span>
+                        <p class="family-names">[Nombres de los Padres]</p>
+                        
+                        <span class="family-label">MIS PADRINOS:</span>
+                        <p class="family-names">[Nombres de los Padrinos]</p>
                     </div>
-
-                    <div class="input-group">
-                        <label>PALABRAS PARA SOFÍA</label>
-                        <textarea id="guestWords" rows="3" placeholder="Deja un mensaje especial..."></textarea>
-                    </div>
-
-                    <button onclick="sendConfirmation()" class="btn btn-p">CONFIRMAR ASISTENCIA</button>
-                    <button onclick="goToPage(0)" class="btn btn-s" style="border:none; margin-top:5px;">VOLVER ATRÁS</button>
+                    <button onclick="goToPage(2)" class="btn btn-p">SIGUIENTE</button>
+                    <button onclick="goToPage(0)" class="btn btn-s" style="border:none;">ATRÁS</button>
                 </div>
 
-                <!-- HOJA 3: DETALLES ADICIONALES -->
+                <!-- HOJA 3: FECHA, LUGAR Y UBICACIÓN -->
                 <div class="page" id="page3">
-                    <h1 class="main-title" style="font-size: 2.5rem;">Más Detalles</h1>
-                    <p style="color: #888; margin-bottom: 30px;">Información Importante</p>
-
-                    <div class="data-row">
-                        <span style="color: var(--primary); font-size: 0.7rem; font-weight: bold;">CÓDIGO DE VESTIMENTA</span>
-                        <p style="font-size: 1.1rem;">Formal / Blanco y Rosa</p>
+                    <h1 class="main-title" style="font-size: 2.5rem;">Fecha y Lugar</h1>
+                    <div class="family-section">
+                        <span class="family-label">CUÁNDO</span>
+                        <p class="family-names">26 de Julio, 2026 - 20:00 hrs</p>
+                        <span class="family-label">LUGAR</span>
+                        <p class="family-names">Parroquia Sagrada Familia</p>
+                        <p style="color: #666; font-size: 0.9rem;">Av. Principal #777, Ciudad</p>
                     </div>
-
-                    <div class="data-row">
-                        <span style="color: var(--primary); font-size: 0.7rem; font-weight: bold;">REGALOS</span>
-                        <p style="font-size: 1.1rem;">Tu presencia es mi mejor regalo.</p>
-                    </div>
-
-                    <p style="margin-top: 30px; font-size: 1.1rem; color: #555; font-style: italic;">¡Te esperamos con mucha emoción!</p>
-
-                    <button onclick="goToPage(0)" class="btn btn-p" style="margin-top:40px;">VOLVER AL INICIO</button>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-p">UBICACIÓN GPS</a>
+                    <button onclick="goToPage(0)" class="btn btn-s" style="border:none;">VOLVER AL INICIO</button>
                 </div>
 
             </div>
-
-            <!-- Dots -->
             <div class="nav-dots">
                 <div class="dot active" id="dot0"></div>
                 <div class="dot" id="dot1"></div>
@@ -232,17 +140,8 @@
     </div>
 
     <script>
-        const photos = [
-            'app/img/foto1.jpg', 'app/img/foto2.jpg', 'app/img/foto3.jpg', 
-            'app/img/foto4.jpg', 'app/img/foto5.jpg', 'app/img/foto6.jpg'
-        ];
-
-        const edits = [
-            'edit-kenburns', 'edit-glitch', 'edit-3d', 'edit-vslide', 
-            'edit-grid', 'edit-shake', 'edit-blur', 'edit-spin', 
-            'edit-rgb', 'edit-hearts'
-        ];
-        
+        const photos = ['app/img/foto1.jpg', 'app/img/foto2.jpg', 'app/img/foto3.jpg', 'app/img/foto4.jpg', 'app/img/foto5.jpg', 'app/img/foto6.jpg'];
+        const edits = ['edit-kenburns', 'edit-glitch', 'edit-3d', 'edit-vslide', 'edit-grid', 'edit-hearts'];
         const stage = document.getElementById('stage');
         photos.forEach((src, index) => {
             const frame = document.createElement('div');
@@ -255,7 +154,6 @@
             }
             stage.appendChild(frame);
         });
-
         const frames = document.querySelectorAll('.photo-frame');
         let current = 0;
         function nextFrame() {
@@ -263,39 +161,19 @@
             edits.forEach(e => frames[current].classList.remove(e));
             current = (current + 1) % frames.length;
             const randomEdit = edits[Math.floor(Math.random() * edits.length)];
-            frames[current].classList.add('active');
-            frames[current].classList.add(randomEdit);
+            frames[current].classList.add('active', randomEdit);
         }
         frames[0].classList.add('active', 'edit-kenburns');
         setInterval(nextFrame, 4000);
 
         function goToPage(index) {
-            const container = document.getElementById('pageContainer');
-            container.style.transform = `translateX(-${index * 33.333}%)`;
-            for(let i=0; i<3; i++) {
-                document.getElementById('dot' + i).classList.toggle('active', i === index);
-            }
+            document.getElementById('pageContainer').style.transform = `translateX(-${index * 33.333}%)`;
+            for(let i=0; i<3; i++) document.getElementById('dot' + i).classList.toggle('active', i === index);
         }
-
         function startExperience() {
             document.getElementById('entrance-wrapper').style.opacity = '0';
             document.getElementById('entrance-wrapper').style.transform = 'scale(1.5)';
-            setTimeout(() => {
-                document.getElementById('entrance-wrapper').style.display = 'none';
-                document.getElementById('main-content').classList.add('active-content');
-            }, 800);
-        }
-
-        function sendConfirmation() {
-            const name = document.getElementById('guestName').value;
-            const words = document.getElementById('guestWords').value;
-            if(!name) {
-                alert("Por favor, ingresa tu nombre.");
-                return;
-            }
-            const message = `*CONFIRMACIÓN DE ASISTENCIA*%0A%0A*Evento:* Invitación de Sofía Milagros%0A*Nombre:* ${name}%0A*Mensaje:* ${words}`;
-            window.open(`https://wa.me/PON_TU_TELEFONO_AQUI?text=${message}`, '_blank');
-            goToPage(2);
+            setTimeout(() => { document.getElementById('entrance-wrapper').style.display = 'none'; document.getElementById('main-content').classList.add('active-content'); }, 800);
         }
     </script>
 </body>
