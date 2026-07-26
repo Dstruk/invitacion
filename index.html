@@ -3,67 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dstruk | Exclusive Invitation</title>
+    <title>DSTRUK | SECURE ACCESS</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Background Elements -->
-    <div class="bg-glow"></div>
-    <div class="bg-particles"></div>
+    <!-- HUD Elements -->
+    <div class="scanline"></div>
+    <div class="grid-overlay"></div>
 
-    <!-- Futuristic Seal / Entrance -->
+    <!-- Entrance Screen -->
     <div id="entrance-wrapper" onclick="openInvitation()">
-        <div class="digital-seal">
-            <div class="seal-inner">
-                <div class="rings">
-                    <div class="ring"></div>
-                    <div class="ring"></div>
-                    <div class="ring"></div>
+        <div class="cyber-container">
+            <div class="auth-box">
+                <div class="glitch-wrapper">
+                    <div class="glitch" data-text="DSTRUK">DSTRUK</div>
                 </div>
-                <div class="core">
-                    <div class="glitch-text" data-text="ACCESS">ACCESS</div>
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
                 </div>
+                <div class="access-trigger">
+                    <div class="trigger-ring"></div>
+                    <div class="trigger-ring"></div>
+                    <div class="trigger-core">
+                        <span>INIT</span>
+                    </div>
+                </div>
+                <p class="status-text">DECRYPTING INVITATION...</p>
             </div>
-            <p class="instruction">ENCRYPTED MESSAGE RECEIVED<br><span>TAP TO DECRYPT</span></p>
         </div>
     </div>
 
-    <!-- Main Content (Glassmorphism UI) -->
+    <!-- Content Screen -->
     <div id="main-content" class="hidden">
-        <div class="glass-card">
-            <div class="scanner-line"></div>
+        <div class="glass-frame">
+            <div class="frame-corner top-left"></div>
+            <div class="frame-corner top-right"></div>
+            <div class="frame-corner bottom-left"></div>
+            <div class="frame-corner bottom-right"></div>
+            
             <header>
-                <p class="eyebrow">LIMITED ACCESS EVENT</p>
-                <h1 class="glitch-title">DSTRUK</h1>
-                <div class="divider"></div>
+                <div class="badge">SECURE DATA</div>
+                <h1 class="main-title">DSTRUK</h1>
             </header>
 
-            <div class="info-grid">
-                <div class="info-item">
-                    <span class="label">TIMELINE</span>
-                    <p class="value">JULY 26. 2026</p>
-                    <p class="sub-value">20:00 HRS</p>
+            <div class="data-block">
+                <div class="data-row">
+                    <span class="label">DATE // TIME</span>
+                    <p class="info">26.07.2026 / 20:00</p>
                 </div>
-
-                <div class="info-item">
-                    <span class="label">COORDINATES</span>
-                    <p class="value">NEO STATION 01</p>
-                    <p class="sub-value">AV. FUTURA 777, CP 001</p>
+                <div class="data-row">
+                    <span class="label">LOCATION // NODE</span>
+                    <p class="info">NEO STATION 01</p>
+                    <p class="sub-info">AV. FUTURA 777</p>
                 </div>
             </div>
 
-            <div class="action-area">
-                <a href="https://maps.google.com" target="_blank" class="cyber-btn secondary">
-                    <span class="btn-content">GPS LOCATION</span>
-                </a>
-                <a href="https://wa.me/521?text=ACCESS_CONFIRMED_DSTRUK" class="cyber-btn primary">
-                    <span class="btn-content">CONFIRM ACCESS</span>
-                </a>
+            <div class="actions">
+                <a href="https://wa.me/521?text=ACCESS_GRANTED" class="btn primary">CONFIRM ACCESS</a>
+                <a href="https://maps.google.com" target="_blank" class="btn secondary">OPEN COORDINATES</a>
             </div>
-            
-            <p class="footer-code">UID: 0x88F2...A9B</p>
         </div>
     </div>
 
@@ -72,12 +72,12 @@
             const entrance = document.getElementById('entrance-wrapper');
             const content = document.getElementById('main-content');
             
-            entrance.classList.add('authorized');
+            document.body.classList.add('authorized');
+            entrance.style.transform = 'translateY(-100%)';
             
             setTimeout(() => {
                 entrance.style.display = 'none';
                 content.classList.remove('hidden');
-                content.classList.add('reveal');
             }, 800);
         }
     </script>
