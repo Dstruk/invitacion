@@ -11,7 +11,7 @@
             --accent: #ffd700;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
         body { background: #000; font-family: 'Rajdhani', sans-serif; height: 100vh; width: 100vw; overflow: hidden; }
 
         /* --- CONTENEDOR DE EDICIONES (SCENES) --- */
@@ -34,13 +34,10 @@
             object-fit: cover;
         }
 
-        /* --- LAS 10 EDICIONES TIPO TIKTOK --- */
-        
-        /* 1. Ken Burns (Zoom Pro) */
+        /* --- EDICIONES TIPO TIKTOK --- */
         .edit-kenburns img { animation: kenburns 10s linear infinite alternate; }
         @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.4) translate(10px, 5px); } }
 
-        /* 2. Glitch Intense */
         .edit-glitch.active img { animation: glitch-anim 0.2s infinite; }
         @keyframes glitch-anim {
             0% { transform: translate(0); filter: hue-rotate(0deg) contrast(1.2); }
@@ -50,16 +47,13 @@
             100% { transform: translate(0); }
         }
 
-        /* 3. 3D Floating tilt */
         .edit-3d { perspective: 1200px; }
         .edit-3d img { animation: tilt-3d 6s ease-in-out infinite alternate; }
         @keyframes tilt-3d { from { transform: rotateY(-20deg) scale(1.1); } to { transform: rotateY(20deg) scale(1.1); } }
 
-        /* 4. Vertical Slide Sweep */
         .edit-vslide img { animation: v-slide 8s ease-in-out infinite alternate; }
         @keyframes v-slide { from { object-position: center 0%; transform: scale(1.2); } to { object-position: center 100%; transform: scale(1.2); } }
 
-        /* 5. Mirror Grid 2x2 */
         .edit-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; background: #000; }
         .edit-grid .clone { width: 100%; height: 100%; overflow: hidden; position: relative; }
         .edit-grid .clone img { position: absolute; width: 200%; height: 200%; object-fit: cover; animation: grid-pulse 4s infinite alternate; }
@@ -69,28 +63,23 @@
         .edit-grid .c3 img { bottom: 0; left: 0; filter: saturate(2); }
         .edit-grid .c4 img { bottom: 0; right: 0; filter: contrast(1.5); }
 
-        /* 6. Flash Shake */
         .edit-shake.active { animation: shake-flash 0.5s ease-out; }
         @keyframes shake-flash {
             0% { filter: brightness(5) contrast(2); transform: scale(1.2); }
             100% { filter: brightness(1) contrast(1); transform: scale(1); }
         }
 
-        /* 7. Zoom Blur In */
         .edit-blur img { animation: zoom-blur 5s ease-out forwards; }
         @keyframes zoom-blur {
             0% { transform: scale(2); filter: blur(20px); opacity: 0; }
             100% { transform: scale(1); filter: blur(0px); opacity: 1; }
         }
 
-        /* 8. Kaleidoscope / Spin */
         .edit-spin img { animation: slow-spin 20s linear infinite; transform: scale(1.5); }
         @keyframes slow-spin { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
 
-        /* 9. RGB Split Static */
         .edit-rgb img { filter: drop-shadow(4px 0px 0px #ff0000) drop-shadow(-4px 0px 0px #00f2ff); transform: scale(1.05); }
 
-        /* 10. Floating Heart Particles overlay */
         .edit-hearts::after {
             content: '❤'; color: var(--primary); font-size: 2rem; position: absolute;
             animation: fly-hearts 3s infinite linear; text-shadow: 0 0 10px #fff;
@@ -104,7 +93,7 @@
         /* --- UI & ENTRANCE --- */
         #overlay { position: fixed; inset: 0; z-index: 10; background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8)); pointer-events: none; }
         
-        #entrance-wrapper { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); transition: all 0.8s ease; }
+        #entrance-wrapper { position: fixed; inset: 0; z-index: 3000; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); transition: all 0.8s ease; }
         
         .auth-card { text-align: center; cursor: pointer; padding: 40px; border-radius: 50px; border: 2px solid rgba(255,255,255,0.4); background: rgba(255,133,161,0.2); box-shadow: 0 0 40px rgba(255,133,161,0.3); }
         
@@ -114,23 +103,48 @@
         
         @keyframes pulse-anim { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0.7); } 70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(255,255,255,0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0); } }
         
+        /* --- MULTI-PAGE SYSTEM --- */
         #main-content { position: fixed; bottom: -100%; left: 0; width: 100%; height: 85vh; z-index: 200; transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
-        .glass-sheet { height: 100%; background: rgba(255,255,255,0.95); backdrop-filter: blur(30px); border-top-left-radius: 50px; border-top-right-radius: 50px; padding: 50px 30px; text-align: center; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); overflow-y: auto; }
+        .glass-sheet { height: 100%; background: rgba(255,255,255,0.95); backdrop-filter: blur(30px); border-top-left-radius: 50px; border-top-right-radius: 50px; position: relative; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); overflow: hidden; }
+
+        .page-container {
+            display: flex;
+            width: 300%; 
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .page {
+            width: 33.333%;
+            height: 100%;
+            padding: 50px 30px;
+            text-align: center;
+            flex-shrink: 0;
+            overflow-y: auto;
+        }
+
+        .main-title { font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--primary); }
+        .data-row { border-left: 5px solid var(--primary); padding: 10px 15px; text-align: left; margin: 20px 0; background: rgba(255,133,161,0.05); }
         
-        .btn { display: block; padding: 20px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 15px; font-family: 'Orbitron', sans-serif; letter-spacing: 2px; }
-        .btn-p { background: var(--primary); color: #fff; box-shadow: 0 10px 20px rgba(255, 133, 161, 0.4); }
-        .btn-s { border: 2px solid var(--primary); color: var(--primary); }
+        .btn { display: block; padding: 20px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 15px; font-family: 'Orbitron', sans-serif; letter-spacing: 2px; text-align: center; border: none; cursor: pointer; }
+        .btn-p { background: var(--primary); color: #fff; box-shadow: 0 10px 20px rgba(255, 133, 161, 0.4); width: 100%; }
+        .btn-s { border: 2px solid var(--primary); color: var(--primary); width: 100%; background: transparent; }
+
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; font-family: 'Orbitron'; font-size: 0.7rem; color: var(--primary); letter-spacing: 2px; margin-bottom: 8px; font-weight: bold; }
+        .input-group input, .input-group textarea { width: 100%; padding: 15px; border-radius: 15px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.5); font-family: 'Rajdhani'; font-size: 1.1rem; }
 
         .active-content { bottom: 0 !important; }
         
-        .hidden { opacity: 0; pointer-events: none; }
+        .nav-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 300; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(0,0,0,0.1); transition: 0.3s; }
+        .dot.active { background: var(--primary); width: 30px; border-radius: 5px; }
+
     </style>
 </head>
 <body>
 
-    <!-- Fondos Dinámicos con Ediciones -->
     <div id="stage"></div>
-
     <div id="overlay"></div>
 
     <div id="entrance-wrapper" onclick="startExperience()">
@@ -145,24 +159,75 @@
 
     <div id="main-content">
         <div class="glass-sheet">
-            <h1 style="font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--primary);">Sofia Milagros</h1>
-            <p style="letter-spacing: 5px; color: #888; margin-bottom: 30px; font-weight: bold;">GIL MANJARREZ</p>
-            
-            <div style="text-align: left; margin-bottom: 40px;">
-                <div style="border-left: 5px solid var(--primary); padding-left: 20px; margin-bottom: 25px;">
-                    <span style="color: var(--primary); font-size: 0.8rem; font-weight: 900; letter-spacing: 2px;">FECHA Y HORA</span>
-                    <p style="font-size: 1.4rem; font-weight: bold; color: #333;">26.07.2026 / 20:00</p>
+            <div class="page-container" id="pageContainer">
+                
+                <!-- HOJA 1: INVITACIÓN -->
+                <div class="page" id="page1">
+                    <h1 class="main-title">Sofia Milagros</h1>
+                    <p style="letter-spacing: 5px; color: #888; margin-bottom: 30px; font-weight: bold;">GIL MANJARREZ</p>
+                    
+                    <div style="text-align: left; margin-bottom: 30px;">
+                        <div style="border-left: 5px solid var(--primary); padding-left: 20px; margin-bottom: 20px;">
+                            <span style="color: var(--primary); font-size: 0.8rem; font-weight: 900; letter-spacing: 2px;">FECHA Y HORA</span>
+                            <p style="font-size: 1.4rem; font-weight: bold; color: #333;">26.07.2026 / 20:00</p>
+                        </div>
+                        <div style="border-left: 5px solid var(--primary); padding-left: 20px;">
+                            <span style="color: var(--primary); font-size: 0.8rem; font-weight: 900; letter-spacing: 2px;">LUGAR DEL EVENTO</span>
+                            <p style="font-size: 1.4rem; font-weight: bold; color: #333;">CASA DE SOFÍA</p>
+                        </div>
+                    </div>
+
+                    <button onclick="goToPage(1)" class="btn btn-p">SIGUIENTE</button>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-s">UBICACIÓN GPS</a>
                 </div>
-                <div style="border-left: 5px solid var(--primary); padding-left: 20px;">
-                    <span style="color: var(--primary); font-size: 0.8rem; font-weight: 900; letter-spacing: 2px;">LUGAR DEL EVENTO</span>
-                    <p style="font-size: 1.4rem; font-weight: bold; color: #333;">CASA DE SOFÍA</p>
-                    <p style="color: #666;">Av. Futura 777, Col. Diamante</p>
+
+                <!-- HOJA 2: MI CONFIRMACIÓN -->
+                <div class="page" id="page2">
+                    <h1 class="main-title" style="font-size: 2.5rem;">Mi Confirmación</h1>
+                    <p style="color: #888; margin-bottom: 30px;">¡Nos encantaría que nos acompañes!</p>
+
+                    <div class="input-group">
+                        <label>TU NOMBRE</label>
+                        <input type="text" id="guestName" placeholder="Escribe tu nombre">
+                    </div>
+
+                    <div class="input-group">
+                        <label>PALABRAS PARA SOFÍA</label>
+                        <textarea id="guestWords" rows="3" placeholder="Deja un mensaje especial..."></textarea>
+                    </div>
+
+                    <button onclick="sendConfirmation()" class="btn btn-p">CONFIRMAR ASISTENCIA</button>
+                    <button onclick="goToPage(0)" class="btn btn-s" style="border:none; margin-top:5px;">VOLVER ATRÁS</button>
                 </div>
+
+                <!-- HOJA 3: DETALLES ADICIONALES -->
+                <div class="page" id="page3">
+                    <h1 class="main-title" style="font-size: 2.5rem;">Más Detalles</h1>
+                    <p style="color: #888; margin-bottom: 30px;">Información Importante</p>
+
+                    <div class="data-row">
+                        <span style="color: var(--primary); font-size: 0.7rem; font-weight: bold;">CÓDIGO DE VESTIMENTA</span>
+                        <p style="font-size: 1.1rem;">Formal / Blanco y Rosa</p>
+                    </div>
+
+                    <div class="data-row">
+                        <span style="color: var(--primary); font-size: 0.7rem; font-weight: bold;">REGALOS</span>
+                        <p style="font-size: 1.1rem;">Tu presencia es mi mejor regalo.</p>
+                    </div>
+
+                    <p style="margin-top: 30px; font-size: 1.1rem; color: #555; font-style: italic;">¡Te esperamos con mucha emoción!</p>
+
+                    <button onclick="goToPage(0)" class="btn btn-p" style="margin-top:40px;">VOLVER AL INICIO</button>
+                </div>
+
             </div>
 
-            <a href="https://wa.me/521?text=CONFIRMO_ASISTENCIA_SOFIA" class="btn btn-p">CONFIRMAR ACCESO</a>
-            <a href="https://maps.google.com" target="_blank" class="btn btn-s">UBICACIÓN GPS</a>
-            <p style="margin-top: 30px; font-size: 0.7rem; color: #bbb; letter-spacing: 2px;">SECURE ACCESS GRANTED</p>
+            <!-- Dots -->
+            <div class="nav-dots">
+                <div class="dot active" id="dot0"></div>
+                <div class="dot" id="dot1"></div>
+                <div class="dot" id="dot2"></div>
+            </div>
         </div>
     </div>
 
@@ -172,7 +237,6 @@
             'app/img/foto4.jpg', 'app/img/foto5.jpg', 'app/img/foto6.jpg'
         ];
 
-        // Las 10 Ediciones Estilo TikTok
         const edits = [
             'edit-kenburns', 'edit-glitch', 'edit-3d', 'edit-vslide', 
             'edit-grid', 'edit-shake', 'edit-blur', 'edit-spin', 
@@ -180,21 +244,12 @@
         ];
         
         const stage = document.getElementById('stage');
-
-        // Generar frames
         photos.forEach((src, index) => {
             const frame = document.createElement('div');
             frame.className = `photo-frame`;
-            
-            // Si es grid, necesita estructura especial
-            if (index % 5 === 4) { // Cada 5 fotos una tipo Grid
+            if (index % 5 === 4) {
                 frame.classList.add('edit-grid');
-                frame.innerHTML = `
-                    <div class="clone c1"><img src="${src}"></div>
-                    <div class="clone c2"><img src="${src}"></div>
-                    <div class="clone c3"><img src="${src}"></div>
-                    <div class="clone c4"><img src="${src}"></div>
-                `;
+                frame.innerHTML = `<div class="clone c1"><img src="${src}"></div><div class="clone c2"><img src="${src}"></div><div class="clone c3"><img src="${src}"></div><div class="clone c4"><img src="${src}"></div>`;
             } else {
                 frame.innerHTML = `<img src="${src}">`;
             }
@@ -203,38 +258,44 @@
 
         const frames = document.querySelectorAll('.photo-frame');
         let current = 0;
-
         function nextFrame() {
-            // Limpiar clases de edición previas
             frames[current].classList.remove('active');
             edits.forEach(e => frames[current].classList.remove(e));
-            
-            // Siguiente foto
             current = (current + 1) % frames.length;
-            
-            // Asignar nueva edición aleatoria
             const randomEdit = edits[Math.floor(Math.random() * edits.length)];
             frames[current].classList.add('active');
             frames[current].classList.add(randomEdit);
         }
-
-        // Iniciar primera foto
-        frames[0].classList.add('active');
-        frames[0].classList.add('edit-kenburns');
-        
+        frames[0].classList.add('active', 'edit-kenburns');
         setInterval(nextFrame, 4000);
 
+        function goToPage(index) {
+            const container = document.getElementById('pageContainer');
+            container.style.transform = `translateX(-${index * 33.333}%)`;
+            for(let i=0; i<3; i++) {
+                document.getElementById('dot' + i).classList.toggle('active', i === index);
+            }
+        }
+
         function startExperience() {
-            const wrapper = document.getElementById('entrance-wrapper');
-            const main = document.getElementById('main-content');
-            
-            wrapper.style.opacity = '0';
-            wrapper.style.transform = 'scale(1.5)';
-            
+            document.getElementById('entrance-wrapper').style.opacity = '0';
+            document.getElementById('entrance-wrapper').style.transform = 'scale(1.5)';
             setTimeout(() => {
-                wrapper.style.display = 'none';
-                main.classList.add('active-content');
+                document.getElementById('entrance-wrapper').style.display = 'none';
+                document.getElementById('main-content').classList.add('active-content');
             }, 800);
+        }
+
+        function sendConfirmation() {
+            const name = document.getElementById('guestName').value;
+            const words = document.getElementById('guestWords').value;
+            if(!name) {
+                alert("Por favor, ingresa tu nombre.");
+                return;
+            }
+            const message = `*CONFIRMACIÓN DE ASISTENCIA*%0A%0A*Evento:* Invitación de Sofía Milagros%0A*Nombre:* ${name}%0A*Mensaje:* ${words}`;
+            window.open(`https://wa.me/PON_TU_TELEFONO_AQUI?text=${message}`, '_blank');
+            goToPage(2);
         }
     </script>
 </body>
