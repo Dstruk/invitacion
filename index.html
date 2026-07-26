@@ -4,8 +4,267 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DSTRUK | SECURE ACCESS</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon: #00f2ff;
+            --neon-bg: rgba(0, 242, 255, 0.1);
+            --dark: #020205;
+            --purple: #bc13fe;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* HUD & Background */
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 2000;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, var(--neon-bg) 50%, rgba(0, 0, 0, 0) 100%);
+            opacity: 0.1;
+            position: fixed;
+            bottom: 100%;
+            animation: scanline 6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scanline {
+            0% { bottom: 100%; }
+            100% { bottom: -100px; }
+        }
+
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(var(--neon-bg) 1px, transparent 1px),
+                linear-gradient(90deg, var(--neon-bg) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            opacity: 0.2;
+            mask-image: radial-gradient(circle, black, transparent 80%);
+        }
+
+        /* Entrance Screen */
+        #entrance-wrapper {
+            position: fixed;
+            inset: 0;
+            background: var(--dark);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.8s cubic-bezier(0.87, 0, 0.13, 1);
+        }
+
+        .auth-box {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .glitch-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        .glitch {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 15px;
+            position: relative;
+            color: #fff;
+            text-shadow: 0.05em 0 0 var(--neon), -0.05em -0.025em 0 var(--purple);
+            animation: glitch 1s infinite;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 0.05em 0 0 var(--neon), -0.05em -0.025em 0 var(--purple); }
+            14% { text-shadow: 0.05em 0 0 var(--neon), -0.05em -0.025em 0 var(--purple); }
+            15% { text-shadow: -0.05em -0.025em 0 var(--neon), 0.025em 0.025em 0 var(--purple); }
+            49% { text-shadow: -0.05em -0.025em 0 var(--neon), 0.025em 0.025em 0 var(--purple); }
+            50% { text-shadow: 0.025em 0.05em 0 var(--neon), 0.05em 0 0 var(--purple); }
+            99% { text-shadow: 0.025em 0.05em 0 var(--neon), 0.05em 0 0 var(--purple); }
+            100% { text-shadow: -0.025em 0 0 var(--neon), -0.025em -0.025em 0 var(--purple); }
+        }
+
+        .access-trigger {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 40px auto;
+        }
+
+        .trigger-ring {
+            position: absolute;
+            inset: 0;
+            border: 2px solid var(--neon);
+            border-radius: 50%;
+            animation: ringRotate 4s linear infinite;
+            box-shadow: 0 0 15px var(--neon);
+        }
+
+        .trigger-ring:nth-child(2) {
+            inset: 15px;
+            border-color: var(--purple);
+            animation-direction: reverse;
+            box-shadow: 0 0 15px var(--purple);
+        }
+
+        .trigger-core {
+            position: absolute;
+            inset: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .trigger-core span {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: var(--neon);
+        }
+
+        @keyframes ringRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .status-text {
+            margin-top: 20px;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            opacity: 0.5;
+        }
+
+        /* Main Content Card */
+        #main-content {
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        .glass-frame {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .frame-corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--neon);
+        }
+
+        .top-left { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+        .top-right { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+        .bottom-left { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+        .bottom-right { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--neon);
+            color: #000;
+            font-size: 0.6rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 8px;
+            margin-bottom: 40px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .data-block {
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .data-row {
+            margin-bottom: 25px;
+            border-left: 2px solid var(--neon);
+            padding-left: 15px;
+        }
+
+        .label {
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: var(--neon);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .info { font-size: 1.2rem; font-weight: 700; }
+        .sub-info { font-size: 0.8rem; opacity: 0.5; }
+
+        .btn {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            transition: 0.3s;
+        }
+
+        .btn.primary {
+            background: var(--neon);
+            color: #000;
+        }
+
+        .btn.secondary {
+            border: 1px solid var(--neon);
+            color: var(--neon);
+        }
+
+        .btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px var(--neon);
+        }
+
+        .hidden { display: none; }
+
+        /* Mobile Adaptability */
+        @media (max-width: 400px) {
+            .glitch { font-size: 2.2rem; }
+            .main-title { font-size: 2rem; }
+            .glass-frame { padding: 30px 20px; }
+        }
+    </style>
 </head>
 <body>
 
@@ -19,9 +278,6 @@
             <div class="auth-box">
                 <div class="glitch-wrapper">
                     <div class="glitch" data-text="DSTRUK">DSTRUK</div>
-                </div>
-                <div class="loading-bar">
-                    <div class="loading-progress"></div>
                 </div>
                 <div class="access-trigger">
                     <div class="trigger-ring"></div>
@@ -72,7 +328,6 @@
             const entrance = document.getElementById('entrance-wrapper');
             const content = document.getElementById('main-content');
             
-            document.body.classList.add('authorized');
             entrance.style.transform = 'translateY(-100%)';
             
             setTimeout(() => {
