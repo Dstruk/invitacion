@@ -56,30 +56,39 @@
         #main-content { position: fixed; bottom: -100%; left: 0; width: 100%; height: 90vh; z-index: 200; transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
         .glass-sheet { height: 100%; background: rgba(255,255,255,0.96); backdrop-filter: blur(30px); border-top-left-radius: 50px; border-top-right-radius: 50px; position: relative; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); overflow: hidden; }
         .page-container { display: flex; width: 300%; height: 100%; transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1); }
-        .page { width: 33.333%; height: 100%; padding: 60px 25px; text-align: center; flex-shrink: 0; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between; }
+        .page { width: 33.333%; height: 100%; padding: 40px 25px; text-align: center; flex-shrink: 0; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between; }
 
-        .main-title { font-family: 'Great Vibes', cursive; font-size: 3.8rem; color: var(--primary); margin-bottom: 10px; line-height: 1; }
-        .sacred-text { font-size: 1.4rem; color: #444; font-style: italic; line-height: 1.6; margin: 30px 0; font-weight: 500; }
-        .family-section { margin-top: 20px; text-align: left; border-left: 5px solid var(--primary); padding-left: 25px; }
-        .family-label { font-family: 'Orbitron'; font-size: 0.85rem; color: var(--primary); letter-spacing: 3px; font-weight: bold; margin-bottom: 10px; display: block; }
-        .family-names { font-size: 1.6rem; font-weight: bold; color: #222; margin-bottom: 25px; line-height: 1.2; }
+        .main-title { font-family: 'Great Vibes', cursive; font-size: 3.2rem; color: var(--primary); margin-bottom: 5px; line-height: 1; }
+        .sacred-text { font-size: 1.2rem; color: #444; font-style: italic; line-height: 1.4; margin: 15px 0; font-weight: 500; }
+        .family-section { text-align: left; border-left: 5px solid var(--primary); padding-left: 20px; margin-bottom: 15px; }
+        .family-label { font-family: 'Orbitron'; font-size: 0.75rem; color: var(--primary); letter-spacing: 2px; font-weight: bold; margin-bottom: 5px; display: block; }
+        .family-names { font-size: 1.3rem; font-weight: bold; color: #222; margin-bottom: 15px; line-height: 1.2; }
+        .role { font-size: 0.7rem; color: #666; font-family: 'Orbitron'; letter-spacing: 1px; margin-bottom: 2px; display: block; }
 
-        .btn { display: block; padding: 22px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 20px; font-family: 'Orbitron', sans-serif; letter-spacing: 3px; text-align: center; border: none; cursor: pointer; font-size: 1rem; }
-        .btn-p { background: var(--primary); color: #fff; width: 100%; box-shadow: 0 10px 20px rgba(255, 133, 161, 0.3); }
-        .btn-s { border: 2.3px solid var(--primary); color: var(--primary); width: 100%; background: transparent; }
+        .btn { display: block; padding: 15px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 10px; font-family: 'Orbitron', sans-serif; letter-spacing: 2px; text-align: center; border: none; cursor: pointer; font-size: 0.85rem; }
+        .btn-p { background: var(--primary); color: #fff; width: 100%; box-shadow: 0 5px 15px rgba(255, 133, 161, 0.3); }
+        .btn-s { border: 2px solid var(--primary); color: var(--primary); width: 100%; background: transparent; }
 
-        .nav-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 300; }
+        .nav-dots { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 300; }
         .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(0,0,0,0.1); transition: 0.3s; }
         .dot.active { background: var(--primary); width: 30px; border-radius: 5px; }
         .active-content { bottom: 0 !important; }
 
-        .section-title { font-family: 'Orbitron'; font-size: 1.1rem; color: var(--primary); letter-spacing: 5px; font-weight: 900; margin-bottom: 10px; text-transform: uppercase; }
+        /* Timer Styles */
+        .countdown-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
+        .timer-box { background: rgba(255, 133, 161, 0.1); padding: 8px; border-radius: 10px; min-width: 55px; border: 1px solid var(--primary); }
+        .timer-val { display: block; font-size: 1.1rem; font-weight: bold; font-family: 'Orbitron'; color: var(--primary); }
+        .timer-label { font-size: 0.55rem; text-transform: uppercase; color: #666; }
+
+        .section-title { font-family: 'Orbitron'; font-size: 1rem; color: var(--primary); letter-spacing: 4px; font-weight: 900; margin-bottom: 5px; text-transform: uppercase; }
 
         @media (max-width: 480px) {
-            .main-title { font-size: 3.2rem; }
-            .sacred-text { font-size: 1.2rem; }
-            .family-names { font-size: 1.4rem; }
-            .page { padding: 50px 20px; }
+            .main-title { font-size: 2.8rem; }
+            .sacred-text { font-size: 1.1rem; }
+            .family-names { font-size: 1.2rem; }
+            .page { padding: 40px 15px; }
+            .countdown-container { gap: 6px; }
+            .timer-box { min-width: 45px; padding: 5px; }
         }
     </style>
 </head>
@@ -105,7 +114,7 @@
                     <div>
                         <p class="section-title">Mi Primera Comunión</p>
                         <h1 class="main-title">Sofia Milagros</h1>
-                        <p style="letter-spacing: 6px; color: #888; font-size: 1rem; font-weight: bold; margin-bottom: 20px;">GIL MANJARREZ</p>
+                        <p style="letter-spacing: 6px; color: #888; font-size: 0.9rem; font-weight: bold; margin-bottom: 10px;">GIL MANJARREZ</p>
                     </div>
                     
                     <p class="sacred-text">
@@ -118,15 +127,23 @@
                 <!-- HOJA 2: PADRES Y PADRINOS -->
                 <div class="page" id="page2">
                     <div>
-                        <h1 class="main-title" style="font-size: 3rem;">Mis Padres y Padrinos</h1>
+                        <h1 class="main-title" style="font-size: 2.8rem;">Mis Padres y Padrinos</h1>
                     </div>
                     
                     <div class="family-section">
                         <span class="family-label">CON LA BENDICIÓN DE MIS PADRES:</span>
-                        <p class="family-names">Manuel Gil Primo<br>& Sonia Manjarrez Becerril</p>
+                        <div style="margin-bottom: 15px;">
+                            <span class="role">PADRE:</span>
+                            <p class="family-names">Manuel Gil Primo</p>
+                            <span class="role">MADRE:</span>
+                            <p class="family-names">Sonia Manjarrez Becerril</p>
+                        </div>
                         
                         <span class="family-label">MIS PADRINOS:</span>
-                        <p class="family-names">[Esperando nombres de Padrinos]</p>
+                        <div>
+                            <span class="role">MADRINA:</span>
+                            <p class="family-names">Maria Elisa Garcia Francisco</p>
+                        </div>
                     </div>
                     
                     <div>
@@ -135,24 +152,33 @@
                     </div>
                 </div>
 
-                <!-- HOJA 3: FECHA, LUGAR Y UBICACIÓN -->
+                <!-- HOJA 3: FECHA, LUGARES Y TEMPORIZADOR -->
                 <div class="page" id="page3">
                     <div>
-                        <h1 class="main-title" style="font-size: 3rem;">Fecha y Lugar</h1>
+                        <h1 class="main-title" style="font-size: 2.5rem;">Fecha y Lugares</h1>
                     </div>
                     
-                    <div class="family-section">
-                        <span class="family-label">CUÁNDO</span>
-                        <p class="family-names">26 de Julio, 2026<br>20:00 hrs</p>
-                        <span class="family-label">LUGAR</span>
-                        <p class="family-names">Parroquia Sagrada Familia</p>
-                        <p style="color: #666; font-size: 1.1rem; font-weight: 500;">Av. Principal #777, Ciudad</p>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div class="family-section" style="margin-bottom: 0;">
+                            <span class="family-label">CEREMONIA RELIGIOSA - 08:00 AM</span>
+                            <p class="family-names" style="font-size: 1.1rem; margin-bottom: 5px;">Parroquia [Nombre de Iglesia]</p>
+                            <a href="https://maps.google.com" target="_blank" class="btn btn-p" style="padding: 10px; margin-top: 0; font-size: 0.7rem;">GPS IGLESIA</a>
+                        </div>
+
+                        <div class="family-section" style="margin-bottom: 0;">
+                            <span class="family-label">RECEPCIÓN - 01:00 PM</span>
+                            <p class="family-names" style="font-size: 1.1rem; margin-bottom: 5px;">Salón [Nombre de Salón]</p>
+                            <a href="https://maps.google.com" target="_blank" class="btn btn-p" style="padding: 10px; margin-top: 0; font-size: 0.7rem;">GPS SALÓN</a>
+                        </div>
+                    </div>
+
+                    <div id="countdown" class="countdown-container">
+                        <div class="timer-box"><span id="days" class="timer-val">00</span><span class="timer-label">Días</span></div>
+                        <div class="timer-box"><span id="hours" class="timer-val">00</span><span class="timer-label">Hrs</span></div>
+                        <div class="timer-box"><span id="minutes" class="timer-val">00</span><span class="timer-label">Min</span></div>
                     </div>
                     
-                    <div>
-                        <a href="https://maps.google.com" target="_blank" class="btn btn-p">UBICACIÓN GPS</a>
-                        <button onclick="goToPage(0)" class="btn btn-s" style="border:none; margin-top: 10px;">VOLVER AL INICIO</button>
-                    </div>
+                    <button onclick="goToPage(0)" class="btn btn-s" style="border:none; margin-top: 0;">VOLVER AL INICIO</button>
                 </div>
 
             </div>
@@ -200,6 +226,18 @@
             document.getElementById('entrance-wrapper').style.transform = 'scale(1.5)';
             setTimeout(() => { document.getElementById('entrance-wrapper').style.display = 'none'; document.getElementById('main-content').classList.add('active-content'); }, 800);
         }
+
+        // TIMER LOGIC - Ajustado al 1 de Agosto, 2026 a las 08:00 AM (inicio del evento)
+        const eventDate = new Date('August 1, 2026 08:00:00').getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = eventDate - now;
+            if (diff > 0) {
+                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('minutes').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            }
+        }, 1000);
     </script>
 </body>
 </html>
