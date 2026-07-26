@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSTRUK | SECURE ACCESS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>SOFIA | EXCLUSIVE ACCESS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon: #00f2ff;
-            --neon-bg: rgba(0, 242, 255, 0.1);
-            --dark: #020205;
-            --purple: #bc13fe;
+            --primary: #ff85a1; /* Rosa vibrante suave */
+            --secondary: #fbb1bd; /* Rosa pastel */
+            --bg: #fffafa; /* Blanco nieve */
+            --accent: #ffd700; /* Dorado para el toque de "Milagros" */
+            --glass: rgba(255, 255, 255, 0.7);
         }
 
         * {
@@ -21,8 +22,8 @@
         }
 
         body {
-            background-color: var(--dark);
-            color: #fff;
+            background-color: var(--bg);
+            color: #4a4a4a;
             font-family: 'Rajdhani', sans-serif;
             height: 100vh;
             width: 100vw;
@@ -32,13 +33,13 @@
             justify-content: center;
         }
 
-        /* HUD & Background */
+        /* HUD & Background - Versión Clara */
         .scanline {
             width: 100%;
             height: 100px;
             z-index: 2000;
-            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, var(--neon-bg) 50%, rgba(0, 0, 0, 0) 100%);
-            opacity: 0.1;
+            background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 133, 161, 0.05) 50%, rgba(255, 255, 255, 0) 100%);
+            opacity: 0.5;
             position: fixed;
             bottom: 100%;
             animation: scanline 6s linear infinite;
@@ -54,24 +55,24 @@
             position: fixed;
             inset: 0;
             background-image: 
-                linear-gradient(var(--neon-bg) 1px, transparent 1px),
-                linear-gradient(90deg, var(--neon-bg) 1px, transparent 1px);
-            background-size: 40px 40px;
+                linear-gradient(rgba(255, 133, 161, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 133, 161, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
             z-index: -1;
-            opacity: 0.2;
-            mask-image: radial-gradient(circle, black, transparent 80%);
+            opacity: 0.5;
+            mask-image: radial-gradient(circle, white, transparent 90%);
         }
 
         /* Entrance Screen */
         #entrance-wrapper {
             position: fixed;
             inset: 0;
-            background: var(--dark);
+            background: var(--bg);
             z-index: 3000;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.8s cubic-bezier(0.87, 0, 0.13, 1);
+            transition: transform 1s cubic-bezier(0.87, 0, 0.13, 1);
         }
 
         .auth-box {
@@ -85,64 +86,60 @@
         }
 
         .glitch {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            font-weight: 900;
-            letter-spacing: 15px;
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
             position: relative;
-            color: #fff;
-            text-shadow: 0.05em 0 0 var(--neon), -0.05em -0.025em 0 var(--purple);
-            animation: glitch 1s infinite;
+            color: var(--primary);
+            text-shadow: 2px 2px 0px var(--secondary);
+            animation: float 3s ease-in-out infinite;
         }
 
-        @keyframes glitch {
-            0% { text-shadow: 0.05em 0 0 var(--neon), -0.05em -0.025em 0 var(--purple); }
-            14% { text-shadow: 0.05em 0 0 var(--neon), -0.05em -0.025em 0 var(--purple); }
-            15% { text-shadow: -0.05em -0.025em 0 var(--neon), 0.025em 0.025em 0 var(--purple); }
-            49% { text-shadow: -0.05em -0.025em 0 var(--neon), 0.025em 0.025em 0 var(--purple); }
-            50% { text-shadow: 0.025em 0.05em 0 var(--neon), 0.05em 0 0 var(--purple); }
-            99% { text-shadow: 0.025em 0.05em 0 var(--neon), 0.05em 0 0 var(--purple); }
-            100% { text-shadow: -0.025em 0 0 var(--neon), -0.025em -0.025em 0 var(--purple); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .access-trigger {
             position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 40px auto;
+            width: 140px;
+            height: 140px;
+            margin: 30px auto;
         }
 
         .trigger-ring {
             position: absolute;
             inset: 0;
-            border: 2px solid var(--neon);
+            border: 2px solid var(--primary);
             border-radius: 50%;
-            animation: ringRotate 4s linear infinite;
-            box-shadow: 0 0 15px var(--neon);
+            animation: ringRotate 5s linear infinite;
+            box-shadow: 0 0 15px rgba(255, 133, 161, 0.3);
         }
 
         .trigger-ring:nth-child(2) {
             inset: 15px;
-            border-color: var(--purple);
+            border-color: var(--accent);
             animation-direction: reverse;
-            box-shadow: 0 0 15px var(--purple);
+            border-style: dashed;
         }
 
         .trigger-core {
             position: absolute;
-            inset: 30px;
-            background: rgba(255, 255, 255, 0.05);
+            inset: 35px;
+            background: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--secondary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .trigger-core span {
+            font-family: 'Orbitron', sans-serif;
             font-size: 0.8rem;
             letter-spacing: 2px;
-            color: var(--neon);
+            color: var(--primary);
+            font-weight: bold;
         }
 
         @keyframes ringRotate {
@@ -152,117 +149,127 @@
 
         .status-text {
             margin-top: 20px;
-            font-size: 0.7rem;
-            letter-spacing: 4px;
-            opacity: 0.5;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            color: #888;
+            font-weight: 500;
         }
 
-        /* Main Content Card */
+        /* Main Content Card - Versión Clara Innovadora */
         #main-content {
             width: 90%;
-            max-width: 400px;
+            max-width: 420px;
             padding: 20px;
             z-index: 10;
         }
 
         .glass-frame {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px 30px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 2px solid white;
+            border-radius: 30px;
+            padding: 45px 25px;
             position: relative;
             text-align: center;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 40px rgba(255, 133, 161, 0.15);
         }
 
         .frame-corner {
             position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--neon);
+            width: 25px;
+            height: 25px;
+            border: 3px solid var(--primary);
         }
 
-        .top-left { top: -2px; left: -2px; border-right: none; border-bottom: none; }
-        .top-right { top: -2px; right: -2px; border-left: none; border-bottom: none; }
-        .bottom-left { bottom: -2px; left: -2px; border-right: none; border-top: none; }
-        .bottom-right { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+        .top-left { top: -5px; left: -5px; border-right: none; border-bottom: none; border-radius: 10px 0 0 0; }
+        .top-right { top: -5px; right: -5px; border-left: none; border-bottom: none; border-radius: 0 10px 0 0; }
+        .bottom-left { bottom: -5px; left: -5px; border-right: none; border-top: none; border-radius: 0 0 0 10px; }
+        .bottom-right { bottom: -5px; right: -5px; border-left: none; border-top: none; border-radius: 0 0 10px 0; }
 
         .badge {
             display: inline-block;
-            padding: 4px 12px;
-            background: var(--neon);
-            color: #000;
-            font-size: 0.6rem;
-            font-weight: 900;
+            padding: 5px 15px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
             letter-spacing: 2px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            border-radius: 50px;
         }
 
         .main-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .sub-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            letter-spacing: 8px;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            color: #666;
             margin-bottom: 40px;
-            text-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
 
         .data-block {
             text-align: left;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
         }
 
         .data-row {
-            margin-bottom: 25px;
-            border-left: 2px solid var(--neon);
-            padding-left: 15px;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--secondary);
+            padding-left: 20px;
         }
 
         .label {
-            font-size: 0.6rem;
+            font-size: 0.7rem;
             letter-spacing: 2px;
-            color: var(--neon);
+            color: var(--primary);
             display: block;
             margin-bottom: 5px;
+            font-weight: 700;
         }
 
-        .info { font-size: 1.2rem; font-weight: 700; }
-        .sub-info { font-size: 0.8rem; opacity: 0.5; }
+        .info { font-size: 1.3rem; font-weight: 700; color: #333; }
+        .sub-info { font-size: 0.9rem; color: #888; margin-top: 2px; }
 
         .btn {
             display: block;
-            padding: 15px;
+            padding: 18px;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 15px;
             font-weight: 700;
             letter-spacing: 2px;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-            transition: 0.3s;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .btn.primary {
-            background: var(--neon);
-            color: #000;
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(255, 133, 161, 0.3);
         }
 
         .btn.secondary {
-            border: 1px solid var(--neon);
-            color: var(--neon);
+            border: 2px solid var(--primary);
+            color: var(--primary);
         }
 
         .btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 20px var(--neon);
+            transform: scale(1.05) translateY(-5px);
         }
 
         .hidden { display: none; }
 
         /* Mobile Adaptability */
         @media (max-width: 400px) {
-            .glitch { font-size: 2.2rem; }
-            .main-title { font-size: 2rem; }
-            .glass-frame { padding: 30px 20px; }
+            .glitch { font-size: 3rem; }
+            .main-title { font-size: 2.2rem; }
+            .glass-frame { padding: 35px 20px; }
         }
     </style>
 </head>
@@ -274,20 +281,18 @@
 
     <!-- Entrance Screen -->
     <div id="entrance-wrapper" onclick="openInvitation()">
-        <div class="cyber-container">
-            <div class="auth-box">
-                <div class="glitch-wrapper">
-                    <div class="glitch" data-text="DSTRUK">DSTRUK</div>
-                </div>
-                <div class="access-trigger">
-                    <div class="trigger-ring"></div>
-                    <div class="trigger-ring"></div>
-                    <div class="trigger-core">
-                        <span>INIT</span>
-                    </div>
-                </div>
-                <p class="status-text">DECRYPTING INVITATION...</p>
+        <div class="auth-box">
+            <div class="glitch-wrapper">
+                <div class="glitch">Sofia Milagros</div>
             </div>
+            <div class="access-trigger">
+                <div class="trigger-ring"></div>
+                <div class="trigger-ring"></div>
+                <div class="trigger-core">
+                    <span>ENTRAR</span>
+                </div>
+            </div>
+            <p class="status-text">DESBLOQUEANDO INVITACIÓN...</p>
         </div>
     </div>
 
@@ -300,25 +305,26 @@
             <div class="frame-corner bottom-right"></div>
             
             <header>
-                <div class="badge">SECURE DATA</div>
-                <h1 class="main-title">DSTRUK</h1>
+                <div class="badge">EVENTO EXCLUSIVO</div>
+                <h1 class="main-title">Sofia Milagros</h1>
+                <p class="sub-title">GIL MANJARREZ</p>
             </header>
 
             <div class="data-block">
                 <div class="data-row">
-                    <span class="label">DATE // TIME</span>
+                    <span class="label">CUÁNDO // TIME</span>
                     <p class="info">26.07.2026 / 20:00</p>
                 </div>
                 <div class="data-row">
-                    <span class="label">LOCATION // NODE</span>
-                    <p class="info">NEO STATION 01</p>
-                    <p class="sub-info">AV. FUTURA 777</p>
+                    <span class="label">DÓNDE // NODE</span>
+                    <p class="info">CASA DE SOFÍA</p>
+                    <p class="sub-info">CALLE EJEMPLO #123</p>
                 </div>
             </div>
 
             <div class="actions">
-                <a href="https://wa.me/521?text=ACCESS_GRANTED" class="btn primary">CONFIRM ACCESS</a>
-                <a href="https://maps.google.com" target="_blank" class="btn secondary">OPEN COORDINATES</a>
+                <a href="https://wa.me/521?text=CONFIRMO_MI_ASISTENCIA_SOFIA" class="btn primary">CONFIRMAR ASISTENCIA</a>
+                <a href="https://maps.google.com" target="_blank" class="btn secondary">UBICACIÓN GPS</a>
             </div>
         </div>
     </div>
@@ -328,13 +334,21 @@
             const entrance = document.getElementById('entrance-wrapper');
             const content = document.getElementById('main-content');
             
-            entrance.style.transform = 'translateY(-100%)';
+            entrance.style.transform = 'scale(2)';
+            entrance.style.opacity = '0';
             
             setTimeout(() => {
                 entrance.style.display = 'none';
                 content.classList.remove('hidden');
+                content.style.animation = 'reveal 1s ease-out forwards';
             }, 800);
         }
     </script>
+    <style>
+        @keyframes reveal {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </body>
 </html>
